@@ -7,7 +7,13 @@ import {
   TouchableOpacity,
 } from 'react-native';
 
-const Register = () => {
+const Register = props => {
+  const {navigation} = props;
+
+  const goToLoginPage = () => {
+    navigation.navigate('SignIn');
+  };
+
   return (
     <View style={styles.registerContainer}>
       <View style={styles.cardContainer}>
@@ -30,6 +36,9 @@ const Register = () => {
           style={styles.registerButton}
           onPress={() => console.log('register')}>
           <Text> S'inscrire </Text>
+        </TouchableOpacity>
+        <TouchableOpacity styles={styles.loginLink} onPress={goToLoginPage}>
+          <Text style={styles.loginLinkText}> Déjà membre </Text>
         </TouchableOpacity>
       </View>
     </View>

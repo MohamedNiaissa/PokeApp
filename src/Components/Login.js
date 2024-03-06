@@ -8,8 +8,13 @@ import {
 } from 'react-native';
 import {actions as authActions} from '../redux/reducers/authreducer';
 import {useDispatch, useSelector} from 'react-redux';
-const Login = () => {
+const Login = props => {
   const dispatch = useDispatch();
+  const {navigation} = props;
+
+  const goToRegisterPage = () => {
+    navigation.navigate('SignUp');
+  };
 
   const logUser = useCallback(() => {
     dispatch(authActions.connectUser());
@@ -38,6 +43,9 @@ const Login = () => {
         </View>
         <TouchableOpacity style={styles.loginButton} onPress={logUser}>
           <Text> S'inscrire </Text>
+        </TouchableOpacity>
+        <TouchableOpacity styles={styles.loginLink} onPress={goToRegisterPage}>
+          <Text style={styles.loginLinkText}> Déjà inscrit </Text>
         </TouchableOpacity>
       </View>
     </View>
@@ -90,6 +98,12 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     padding: 10,
     borderRadius: 12,
+  },
+  loginLink: {
+    padding: 10,
+  },
+  loginLinkText: {
+    textDecorationLine: 'underline',
   },
 });
 export default Login;
