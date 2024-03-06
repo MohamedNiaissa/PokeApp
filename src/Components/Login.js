@@ -8,6 +8,9 @@ import {
 } from 'react-native';
 import {actions as authActions} from '../redux/reducers/authreducer';
 import {useDispatch, useSelector} from 'react-redux';
+
+import {setItem} from '../helper/asyncStorageHelper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 const Login = props => {
   const dispatch = useDispatch();
   const {navigation} = props;
@@ -22,9 +25,14 @@ const Login = props => {
     navigation.navigate('SignUp');
   };
 
-  const logUser = useCallback(() => {
-    checkFormValidity ? dispatch(authActions.connectUser()) : undefined;
-  }, [checkFormValidity, dispatch]);
+  const logUser = useCallback(async () => {
+    if (checkFormValidity) {
+      dispatch(authActions.connectUser());
+      //setItem({username: name, password: password});
+      const json = JSON.stringify({username: name, password: password});
+      await AsyncStorage.setItem('userData', json);
+    }
+  }, [checkFormValidity, dispatch, name, password]);
 
   const {isLoggedIn} = useSelector(s => s.auth);
 
