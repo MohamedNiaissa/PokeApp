@@ -3,6 +3,7 @@ import {SafeAreaView, StyleSheet, Text} from 'react-native';
 import TabNavigator from './Components/TabNavigator';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import Register from "./Components/Register";
 
 const Stack = createNativeStackNavigator();
 

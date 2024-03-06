@@ -4,12 +4,14 @@ import Catch from './Catch';
 import Library from './Library';
 import Profil from './Profil';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import Register from './Register';
 
 const TabNavigator = ({route}) => {
   const Tab = createBottomTabNavigator();
 
   return (
     <Tab.Navigator>
+      <Tab.Screen name="Auth" component={Register} />
       <Tab.Screen
         name="Library"
         component={Library}
