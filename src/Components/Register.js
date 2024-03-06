@@ -26,11 +26,8 @@ const Register = props => {
   };
 
   const signUp = useCallback(() => {
-    console.log(name);
-    console.log(password);
-    console.log(checkFormValidity);
     checkFormValidity ? dispatch(authActions.connectUser()) : undefined;
-  }, [name, password, checkFormValidity, dispatch]);
+  }, [checkFormValidity, dispatch]);
 
   return (
     <View style={styles.registerContainer}>

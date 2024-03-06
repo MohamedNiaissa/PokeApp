@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect} from 'react';
+import React, {useCallback, useEffect, useMemo, useState} from 'react';
 import {
   Text,
   TextInput,
@@ -11,14 +11,20 @@ import {useDispatch, useSelector} from 'react-redux';
 const Login = props => {
   const dispatch = useDispatch();
   const {navigation} = props;
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const checkFormValidity = useMemo(() => {
+    return name.length > 2 && password.length > 5;
+  }, [name, password]);
 
   const goToRegisterPage = () => {
     navigation.navigate('SignUp');
   };
 
   const logUser = useCallback(() => {
-    dispatch(authActions.connectUser());
-  }, [dispatch]);
+    checkFormValidity ? dispatch(authActions.connectUser()) : undefined;
+  }, [checkFormValidity, dispatch]);
 
   const {isLoggedIn} = useSelector(s => s.auth);
 
@@ -28,6 +34,8 @@ const Login = props => {
         <View style={styles.userameContainer}>
           <Text>Pseudo</Text>
           <TextInput
+            value={name}
+            onChangeText={setName}
             style={[styles.inputField, styles.usernameInput]}
             placeholder={'Votre nom'}
           />
@@ -35,6 +43,8 @@ const Login = props => {
         <View style={styles.passwordContainer}>
           <Text>Mot de passe</Text>
           <TextInput
+            value={password}
+            onChangeText={setPassword}
             style={[styles.inputField, styles.passwordInput]}
             placeholder={'Votre mot de passe'}
           />
