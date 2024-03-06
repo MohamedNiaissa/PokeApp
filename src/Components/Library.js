@@ -5,12 +5,10 @@ import {getItem} from '../helper/asyncStorageHelper';
 
 const Library = () => {
   useEffect(() => {
-    //const json = AsyncStorage.getItem('userData');
-    //const myValue = getItem();
     async function t() {
-      const json = await AsyncStorage.getItem('userData');
+      const myValue = await getItem();
       console.log('userData userData userData');
-      console.log(json);
+      console.log(myValue);
       console.log('userData userData userData');
     }
     t();
