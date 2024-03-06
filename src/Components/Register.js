@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {
   Text,
   TextInput,
@@ -6,13 +6,31 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
+import {useDispatch, useSelector} from 'react-redux';
+import {actions as authActions} from '../redux/reducers/authreducer';
 
 const Register = props => {
   const {navigation} = props;
+  const {isLoggedIn} = useSelector(s => s.auth);
+  const dispatch = useDispatch();
+
+  const [name, setName] = useState('');
+  const [password, setPassword] = useState('');
+
+  const checkFormValidity = useMemo(() => {
+    return name.length > 2 && password.length > 5;
+  }, [name, password]);
 
   const goToLoginPage = () => {
     navigation.navigate('SignIn');
   };
+
+  const signUp = useCallback(() => {
+    console.log(name);
+    console.log(password);
+    console.log(checkFormValidity);
+    checkFormValidity ? dispatch(authActions.connectUser()) : undefined;
+  }, [name, password, checkFormValidity, dispatch]);
 
   return (
     <View style={styles.registerContainer}>
@@ -20,6 +38,8 @@ const Register = props => {
         <View style={styles.userameContainer}>
           <Text>Pseudo</Text>
           <TextInput
+            value={name}
+            onChangeText={setName}
             style={[styles.inputField, styles.usernameInput]}
             placeholder={'Votre nom'}
           />
@@ -27,14 +47,14 @@ const Register = props => {
         <View style={styles.passwordContainer}>
           <Text>Mot de passe</Text>
           <TextInput
+            value={password}
+            onChangeText={setPassword}
             style={[styles.inputField, styles.passwordInput]}
             placeholder={'Votre mot de passe'}
           />
         </View>
         <Text>Votre photo</Text>
-        <TouchableOpacity
-          style={styles.registerButton}
-          onPress={() => console.log('register')}>
+        <TouchableOpacity style={styles.registerButton} onPress={signUp}>
           <Text> S'inscrire </Text>
         </TouchableOpacity>
         <TouchableOpacity styles={styles.loginLink} onPress={goToLoginPage}>

@@ -22,8 +22,6 @@ const Login = props => {
 
   const {isLoggedIn} = useSelector(s => s.auth);
 
-  useEffect(() => {}, [isLoggedIn]);
-
   return (
     <View style={styles.loginContainer}>
       <View style={styles.cardContainer}>
@@ -42,10 +40,10 @@ const Login = props => {
           />
         </View>
         <TouchableOpacity style={styles.loginButton} onPress={logUser}>
-          <Text> S'inscrire </Text>
+          <Text> Se connecter </Text>
         </TouchableOpacity>
         <TouchableOpacity styles={styles.loginLink} onPress={goToRegisterPage}>
-          <Text style={styles.loginLinkText}> Déjà inscrit </Text>
+          <Text style={styles.loginLinkText}> Pas encore inscrit </Text>
         </TouchableOpacity>
       </View>
     </View>
