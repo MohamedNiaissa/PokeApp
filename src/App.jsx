@@ -1,19 +1,20 @@
-import React from 'react';
+import React, {useCallback} from 'react';
 import {SafeAreaView, StyleSheet, Text} from 'react-native';
 import TabNavigator from './Components/TabNavigator';
 import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import Register from "./Components/Register";
-
-const Stack = createNativeStackNavigator();
+import {actions as authActions} from './redux/reducers/authreducer';
+import Login from './Components/Login';
+import Register from './Components/Register';
+import {Provider, useSelector} from 'react-redux';
+import {store} from './store';
+import RouteNavigation from './Components/RouteNavigation';
 
 const App = () => {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen name="Tab" component={TabNavigator} />
-      </Stack.Navigator>
-    </NavigationContainer>
+    <Provider store={store}>
+      <RouteNavigation />
+    </Provider>
   );
 };
 

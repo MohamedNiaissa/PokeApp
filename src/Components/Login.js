@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useCallback, useEffect} from 'react';
 import {
   Text,
   TextInput,
@@ -6,8 +6,19 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-
+import {actions as authActions} from '../redux/reducers/authreducer';
+import {useDispatch, useSelector} from 'react-redux';
 const Login = () => {
+  const dispatch = useDispatch();
+
+  const logUser = useCallback(() => {
+    dispatch(authActions.connectUser());
+  }, [dispatch]);
+
+  const {isLoggedIn} = useSelector(s => s.auth);
+
+  useEffect(() => {}, [isLoggedIn]);
+
   return (
     <View style={styles.loginContainer}>
       <View style={styles.cardContainer}>
@@ -25,9 +36,7 @@ const Login = () => {
             placeholder={'Votre mot de passe'}
           />
         </View>
-        <TouchableOpacity
-          style={styles.loginButton}
-          onPress={() => console.log('login')}>
+        <TouchableOpacity style={styles.loginButton} onPress={logUser}>
           <Text> S'inscrire </Text>
         </TouchableOpacity>
       </View>
