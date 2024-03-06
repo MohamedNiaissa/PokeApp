@@ -9,12 +9,14 @@ import {
 import {actions as authActions} from '../redux/reducers/authreducer';
 import {useDispatch, useSelector} from 'react-redux';
 
-import {setItem} from '../helper/asyncStorageHelper';
+import {getItem, setItem} from '../helper/asyncStorageHelper';
 const Login = props => {
   const dispatch = useDispatch();
   const {navigation} = props;
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
+
+  const {userId, username} = useSelector(s => s.auth);
 
   const checkFormValidity = useMemo(() => {
     return name.length > 2 && password.length > 5;
@@ -25,14 +27,20 @@ const Login = props => {
   };
 
   const logUser = useCallback(async () => {
-    if (checkFormValidity) {
-      dispatch(authActions.connectUser());
-      console.log({username: name, password: password});
-      await setItem({username: name, password: password});
-      // const json = JSON.stringify({username: name, password: password});
-      // await AsyncStorage.setItem('userData', json);
+    const users = await getItem('users');
+    if (users !== null) {
+      for (let i = 0; i < users.length; i++) {
+        if (name === users[i].username && password === users[i].password) {
+          dispatch(authActions.connectUser());
+          dispatch(authActions.setUserId(users[i].id));
+          dispatch(authActions.setUsername(name));
+          break;
+        }
+      }
+    } else {
+      console.log('no one is registered :(');
     }
-  }, [checkFormValidity, dispatch, name, password]);
+  }, [dispatch, name, password]);
 
   const {isLoggedIn} = useSelector(s => s.auth);
 

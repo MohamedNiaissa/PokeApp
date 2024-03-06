@@ -8,10 +8,10 @@ import {
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {actions as authActions} from '../redux/reducers/authreducer';
+import {getItem, setItem} from '../helper/asyncStorageHelper';
 
 const Register = props => {
   const {navigation} = props;
-  const {isLoggedIn} = useSelector(s => s.auth);
   const dispatch = useDispatch();
 
   const [name, setName] = useState('');
@@ -25,9 +25,27 @@ const Register = props => {
     navigation.navigate('SignIn');
   };
 
-  const signUp = useCallback(() => {
-    checkFormValidity ? dispatch(authActions.connectUser()) : undefined;
-  }, [checkFormValidity, dispatch]);
+  const signUp = useCallback(async () => {
+    if (checkFormValidity) {
+      dispatch(authActions.connectUser());
+      const uniqueID = Date.now().toString();
+      const users = await getItem('users');
+      if (users == null) {
+        await setItem('users', [
+          {id: uniqueID, username: name, password: password},
+        ]);
+        dispatch(authActions.setUserId(uniqueID));
+        dispatch(authActions.setUsername(name));
+      } else {
+        await setItem('users', [
+          ...users,
+          {id: uniqueID, username: name, password: password},
+        ]);
+        dispatch(authActions.setUserId(uniqueID));
+        dispatch(authActions.setUsername(name));
+      }
+    }
+  }, [checkFormValidity, dispatch, name, password]);
 
   return (
     <View style={styles.registerContainer}>
