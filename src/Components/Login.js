@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   ScrollView,
   ImageBackground,
-  Image,
 } from 'react-native';
 import {actions as authActions} from '../redux/reducers/authreducer';
 import {useDispatch, useSelector} from 'react-redux';
@@ -83,8 +82,9 @@ const Login = props => {
             </View>
             <View style={styles.actionContainer}>
               <TouchableOpacity style={styles.loginButton} onPress={logUser}>
-                <Text> Sign in </Text>
+                <Text style={styles.submitText}> Sign in </Text>
               </TouchableOpacity>
+              <View style={styles.separator} />
               <TouchableOpacity
                 styles={styles.loginLink}
                 onPress={goToRegisterPage}>
@@ -99,6 +99,9 @@ const Login = props => {
 };
 
 const styles = StyleSheet.create({
+  separator: {
+    width: 10,
+  },
   scrollViewStyle: {
     flex: 1,
     // You can also specify additional background styles like size and position
@@ -129,13 +132,14 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     width: '90%',
     //backgroundColor: '#C8C8',
-    justifyContent: 'space-between',
+    //justifyContent: 'space-between',
+    //justifyContent: 'center',
   },
   fieldsdContainer: {
     //flex: 1,
     // backgroundColor: 'red',
     width: '100%',
-    height: '60%',
+    height: 200,
     alignItems: 'center',
     justifyContent: 'space-around',
   },
@@ -190,24 +194,23 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 0,
     margin: 0,
-    //  height: 60,
-    //  justifyContent: 'space-between',
-    //alignItems: 'baseline',
     alignItems: 'baseline',
     height: 100,
     justifyContent: 'space-between',
-    //alignItems: 'flex-start', // Align children to the bottom
   },
   loginButton: {
-    //marginTop: 20,
     borderWidth: 2,
     borderColor: 'black',
-    padding: 10,
+    paddingTop: 11,
+    paddingBottom: 11,
     borderRadius: 12,
+    //justifyContent: 'center',
     backgroundColor: '#c48fb4',
+    //flex: 1,
   },
   loginLink: {
     padding: 10,
+    flex: 1,
   },
   loginLinkText: {
     fontFamily: 'PressStart2P-Regular',
@@ -217,7 +220,12 @@ const styles = StyleSheet.create({
     fontWeight: 'normal',
     backgroundColor: '#78c470',
     borderRadius: 10,
-    width: 200,
+  },
+  submitText: {
+    fontFamily: 'PressStart2P-Regular',
+    textAlign: 'center', // Center text horizontally
+    fontSize: 15, // Adjust font size as needed
+    // TODO fix sign button and logo title and scrollview@
   },
 });
 export default Login;
