@@ -58,7 +58,7 @@ const getAllPokemonData = async(limit)=>{
         }else{
             stringType = `${types[0]}`
         }
-        const pokemon = {id: randomIndex, name :name, type: stringType, cry: pokeData.cries.latest, sprite: pokeData.sprites.front_default}
+        const pokemon = {id: i, name: pokeData.name, type: stringType, cry: pokeData.cries.latest, sprite: pokeData.sprites.front_default}
         pokemons.push(pokemon)
     }
 
