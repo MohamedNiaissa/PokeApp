@@ -36,6 +36,7 @@ const TabNavigator = ({route}) => {
         name="Profil"
         component={Profil}
         options={({}) => ({
+          header: () => null,
           tabBarIcon: ({color, size}) => (
             <Icon name="user" size={30} color="#900" />
           ),

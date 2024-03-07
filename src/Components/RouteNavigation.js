@@ -25,7 +25,13 @@ const RouteNavigation = () => {
     <NavigationContainer>
       {isLoggedIn ? (
         <Stack.Navigator>
-          <Stack.Screen name="Tab" component={TabNavigator} />
+          <Stack.Screen
+            name="Tab"
+            options={{
+              header: () => null,
+            }}
+            component={TabNavigator}
+          />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>
