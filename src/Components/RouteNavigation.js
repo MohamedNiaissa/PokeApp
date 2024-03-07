@@ -29,8 +29,20 @@ const RouteNavigation = () => {
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>
-          <Stack.Screen name="SignIn" component={Login} />
-          <Stack.Screen name="SignUp" component={Register} />
+          <Stack.Screen
+            options={{
+              header: () => null,
+            }}
+            name="SignIn"
+            component={Login}
+          />
+          <Stack.Screen
+            options={{
+              header: () => null,
+            }}
+            name="SignUp"
+            component={Register}
+          />
         </Stack.Navigator>
       )}
     </NavigationContainer>
