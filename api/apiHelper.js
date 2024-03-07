@@ -4,20 +4,49 @@ import { PokemonClient } from 'pokenode-ts';
 const api = new PokemonClient();
 
 const getPokemonData = async(id) =>{
+
     const pokeData =  await api.getPokemonById(id)
     const types = pokeData.types.map(type=>{ return type.type.name })
     const typesUrl = pokeData.types.map(type =>{return type.type.url})
-    console.log(12, pokeData)
-    return {name :pokeData.name, type: types,cry: pokeData.cries.latest, typesUrl: typesUrl, height: pokeData.height, weight: pokeData.weight, sprite: pokeData.sprites.front_default}
+    const name = pokeData.name.includes("-") && !pokeData.name.includes("koko" || "tusk" || "mime" || "rime") ? pokeData.name.split("-")[0] : pokeData.name
+    return {id: id, name :name, type: types,cry: pokeData.cries.latest, typesUrl: typesUrl, height: pokeData.height, weight: pokeData.weight, sprite: pokeData.sprites.front_default}
 }
 
-const getAllPokemonData = async(number)=>{
+const getQuizParameter= async()=>{
+    const randomPokemon = Math.floor(Math.random() * 1025) + 1
+    const randomIndex = Math.floor(Math.random() * 4)
+    console.log(18,randomIndex)
+    const pokeData =  await api.getPokemonById(randomPokemon)
+    const types = pokeData.types.map(type=>{ return type.type.name })
+    // const typesUrl = pokeData.types.map(type =>{return type.type.url})
+    // gets the parameters type for quizz
+    const parameters = {
+        type: types,
+        cry: pokeData.cries.latest,
+        height: pokeData.height,
+        weight: pokeData.weight
+    }
+    const quizzType= ["type","cry","height","weight"]
+
+    //extracts a value and a key at random
+    const key = quizzType[randomIndex];
+    const value = parameters[key];
+    const answer = {quizzType: key, wrongAnswer: value}
+    return answer
+    //returns the key for the quizz type and a wrong answer
+
+}
+
+const getAllPokemonData = async(limit)=>{
     let pokemons = []
-    for(let i = 1 ; i<number; i++){
-        const pokemon = api.getPokemonById(i)
+    for(let i = 1 ; i<limit; i++){
+        const pokeData = await  api.getPokemonById(i)
+        const types = pokeData.types.map(type=>{ return type.type.name })
+        const pokemon = {id: randomIndex, name :name, type: types, cry: pokeData.cries.latest, sprite: pokeData.sprites.front_default}
         pokemons.push(pokemon)
     }
-    console.log(pokemons)
+
+    return pokemons
 }
 
-export default {getPokemonData,getAllPokemonData}
+export default {getPokemonData,getAllPokemonData,getQuizParameter}

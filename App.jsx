@@ -1,10 +1,11 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, Text} from 'react-native';
+import CatchScreen from "./component/CatchScreen/CatchScreen";
 
 const App = () => {
   return (
     <SafeAreaView style={styles.screen}>
-      <Text>Home</Text>
+      <CatchScreen></CatchScreen>
     </SafeAreaView>
   );
 };
