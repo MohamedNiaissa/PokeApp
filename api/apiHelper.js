@@ -1,10 +1,9 @@
-import axios from "axios";
 import { PokemonClient } from 'pokenode-ts';
 
-const api = new PokemonClient();
+
 
 const getPokemonData = async(id) =>{
-
+    const api = new PokemonClient();
     const pokeData =  await api.getPokemonById(id)
     const types = pokeData.types.map(type=>{ return type.type.name })
     let stringType
@@ -19,6 +18,7 @@ const getPokemonData = async(id) =>{
 }
 
 const getQuizParameter= async()=>{
+    const api = new PokemonClient();
     const randomPokemon = Math.floor(Math.random() * 1025) + 1
     const randomIndex = Math.floor(Math.random() * 4)
     console.log(18,randomIndex)
@@ -48,6 +48,7 @@ const getQuizParameter= async()=>{
 }
 
 const getAllPokemonData = async(limit)=>{
+    const api = new PokemonClient();
     let pokemons = []
     for(let i = 1 ; i<limit; i++){
         const pokeData = await  api.getPokemonById(i)
