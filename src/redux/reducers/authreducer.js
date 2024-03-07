@@ -6,6 +6,7 @@ const slice = createSlice({
     isLoggedIn: false,
     userId: 0,
     username: '',
+    profilePicture: 'https://picsum.photos/200/300',
   },
   reducers: {
     connectUser: (state, action) => {
@@ -18,9 +19,10 @@ const slice = createSlice({
       state.userId = action.payload;
     },
     setUsername: (state, action) => {
-      console.log('3333333333333');
-      console.log(action.payload);
       state.username = action.payload;
+    },
+    setProfilePicture: (state, action) => {
+      state.profilePicture = action.payload;
     },
   },
 });

@@ -5,10 +5,15 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
+  Button,
+  Image,
+  ScrollView,
 } from 'react-native';
 import {useDispatch, useSelector} from 'react-redux';
 import {actions as authActions} from '../redux/reducers/authreducer';
 import {getItem, setItem} from '../helper/asyncStorageHelper';
+import ImagePicker from 'react-native-image-crop-picker';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const Register = props => {
   const {navigation} = props;
@@ -17,12 +22,35 @@ const Register = props => {
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
 
+  const [profilePictureLink, setProfilePictureLink] = useState(
+    'https://picsum.photos/200/300',
+  );
   const checkFormValidity = useMemo(() => {
     return name.length > 2 && password.length > 5;
   }, [name, password]);
 
   const goToLoginPage = () => {
     navigation.navigate('SignIn');
+  };
+
+  const takeProfilPicture = () => {
+    ImagePicker.openCamera({
+      cropping: true,
+      // showCropFrame: true,
+      // showCropGuidelines:true,
+      // multiple:true,
+      freeStyleCropEnabled: true,
+      mediaType: 'photo',
+      // cropperToolbarTitle:'',
+      // cropperCircleOverlay:true
+      // showCropGuidelines:false,
+      // showCropFrame:false,
+      // hideBottomControls: true, //to hide bottom
+    }).then(image => {
+      console.log('imageeeee', image);
+      setProfilePictureLink(image.path);
+    });
+    return null;
   };
 
   const signUp = useCallback(async () => {
@@ -36,6 +64,7 @@ const Register = props => {
         ]);
         dispatch(authActions.setUserId(uniqueID));
         dispatch(authActions.setUsername(name));
+        dispatch(authActions.setProfilePicture(profilePictureLink));
       } else {
         await setItem('users', [
           ...users,
@@ -43,44 +72,68 @@ const Register = props => {
         ]);
         dispatch(authActions.setUserId(uniqueID));
         dispatch(authActions.setUsername(name));
+        dispatch(authActions.setProfilePicture(profilePictureLink));
       }
     }
-  }, [checkFormValidity, dispatch, name, password]);
+  }, [checkFormValidity, dispatch, name, password, profilePictureLink]);
 
   return (
-    <View style={styles.registerContainer}>
-      <View style={styles.cardContainer}>
-        <View style={styles.userameContainer}>
-          <Text>Pseudo</Text>
-          <TextInput
-            value={name}
-            onChangeText={setName}
-            style={[styles.inputField, styles.usernameInput]}
-            placeholder={'Votre nom'}
-          />
+    <ScrollView contentContainerStyle={styles.scrollContainer}>
+      <View style={styles.registerContainer}>
+        <View style={styles.cardContainer}>
+          <View style={styles.userameContainer}>
+            <Text>Pseudo</Text>
+            <TextInput
+              value={name}
+              onChangeText={setName}
+              style={[styles.inputField, styles.usernameInput]}
+              placeholder={'Votre nom'}
+            />
+          </View>
+          <View style={styles.passwordContainer}>
+            <Text>Mot de passe</Text>
+            <TextInput
+              value={password}
+              onChangeText={setPassword}
+              style={[styles.inputField, styles.passwordInput]}
+              placeholder={'Votre mot de passe'}
+            />
+          </View>
+          <View style={styles.pictureContainer} title="Camera">
+            <Text>Votre photo</Text>
+            <TouchableOpacity onPress={takeProfilPicture}>
+              <Icon name="photo" size={30} color="black" />
+            </TouchableOpacity>
+            <Image
+              source={{
+                uri: profilePictureLink,
+              }}
+              style={styles.picturePreview}
+            />
+          </View>
+
+          <TouchableOpacity style={styles.registerButton} onPress={signUp}>
+            <Text> S'inscrire </Text>
+          </TouchableOpacity>
+          <TouchableOpacity styles={styles.loginLink} onPress={goToLoginPage}>
+            <Text style={styles.loginLinkText}> Déjà membre </Text>
+          </TouchableOpacity>
         </View>
-        <View style={styles.passwordContainer}>
-          <Text>Mot de passe</Text>
-          <TextInput
-            value={password}
-            onChangeText={setPassword}
-            style={[styles.inputField, styles.passwordInput]}
-            placeholder={'Votre mot de passe'}
-          />
-        </View>
-        <Text>Votre photo</Text>
-        <TouchableOpacity style={styles.registerButton} onPress={signUp}>
-          <Text> S'inscrire </Text>
-        </TouchableOpacity>
-        <TouchableOpacity styles={styles.loginLink} onPress={goToLoginPage}>
-          <Text style={styles.loginLinkText}> Déjà membre </Text>
-        </TouchableOpacity>
       </View>
-    </View>
+    </ScrollView>
   );
 };
 
 const styles = StyleSheet.create({
+  scrollContainer: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  picturePreview: {
+    width: '20%',
+    height: '100%',
+  },
   registerContainer: {
     flex: 1,
     height: '100%',
@@ -105,7 +158,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     borderWidth: 2,
     borderColor: 'black',
-    height: '35%',
+    height: '70%',
     marginLeft: 30,
   },
   usernameInput: {
@@ -119,6 +172,13 @@ const styles = StyleSheet.create({
   },
   passwordInput: {
     flex: 1,
+  },
+  pictureContainer: {
+    flex: 1,
+    flexDirection: 'row',
+    width: '90%',
+    alignItems: 'center',
+    justifyContent: 'space-around',
   },
   registerButton: {
     marginTop: 20,
