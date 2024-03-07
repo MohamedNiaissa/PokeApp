@@ -7,6 +7,8 @@ import {
   TouchableOpacity,
   ScrollView,
   ImageBackground,
+  Image,
+  SafeAreaView,
 } from 'react-native';
 import {actions as authActions} from '../redux/reducers/authreducer';
 import {useDispatch, useSelector} from 'react-redux';
@@ -48,182 +50,140 @@ const Login = props => {
   const {isLoggedIn} = useSelector(s => s.auth);
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollViewStyle}>
-      <ImageBackground source={GrassBackground} style={styles.backgroundImage}>
-        {/*        <View>
-          <Image
-            source={require('../assets/PokeChoose-logo.png')}
-            style={styles.titleLogo}
-          />
-        </View>*/}
-
-        <View style={styles.loginContainer}>
-          <View style={styles.cardContainer}>
-            <View style={styles.fieldsdContainer}>
-              <View style={styles.signInSubtitleContainer}>
-                <Text style={styles.signInSubtitle}> Sign In </Text>
-              </View>
-              <View style={styles.userameContainer}>
-                <TextInput
-                  value={name}
-                  onChangeText={setName}
-                  style={[styles.inputField, styles.usernameInput]}
-                  placeholder={'Username'}
-                />
-              </View>
-              <View style={styles.passwordContainer}>
-                <TextInput
-                  value={password}
-                  onChangeText={setPassword}
-                  style={[styles.inputField, styles.passwordInput]}
-                  placeholder={'Password'}
-                />
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.content}>
+          <ImageBackground
+            source={GrassBackground}
+            style={styles.backgroundImage}>
+            <View style={styles.logoTitleContainer}>
+              <Image
+                style={styles.logoTitleImage}
+                source={require('../assets/PokeChoose-logo.png')}
+              />
+            </View>
+            <View style={styles.loginContainer}>
+              <View style={styles.cardContainer}>
+                <View style={styles.fieldsContainer}>
+                  <View style={styles.signinTextContainer}>
+                    <Text style={styles.title}> Sign In </Text>
+                  </View>
+                  <TextInput
+                    value={name}
+                    onChangeText={setName}
+                    style={styles.inputField}
+                    placeholder={'Username'}
+                  />
+                  <TextInput
+                    value={password}
+                    onChangeText={setPassword}
+                    style={styles.inputField}
+                    placeholder={'Password'}
+                  />
+                </View>
+                <View style={styles.actionContainer}>
+                  <TouchableOpacity style={styles.button} onPress={logUser}>
+                    <Text style={styles.buttonText}>Sign in</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    style={styles.link}
+                    onPress={goToRegisterPage}>
+                    <Text style={styles.linkText}>not registered ?</Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-            <View style={styles.actionContainer}>
-              <TouchableOpacity style={styles.loginButton} onPress={logUser}>
-                <Text style={styles.submitText}> Sign in </Text>
-              </TouchableOpacity>
-              <View style={styles.separator} />
-              <TouchableOpacity
-                styles={styles.loginLink}
-                onPress={goToRegisterPage}>
-                <Text style={styles.loginLinkText}> not registered ? </Text>
-              </TouchableOpacity>
-            </View>
-          </View>
+          </ImageBackground>
         </View>
-      </ImageBackground>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  separator: {
-    width: 10,
-  },
-  scrollViewStyle: {
+  container: {
     flex: 1,
-    // You can also specify additional background styles like size and position
-    //backgroundSize: 'cover',
-    //backgroundPosition: 'center',
-    width: '100%',
-    height: '100%',
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+  },
+  content: {
+    flex: 1,
   },
   backgroundImage: {
     flex: 1,
     resizeMode: 'cover',
   },
-  titleLogo: {
-    //objectFit: 'cover',
-    width: 150, // Adjust the width as needed
-    height: 150, // Adjust the height as needed
+  logoTitleContainer: {
+    alignItems: 'center',
+    marginBottom: 80,
+  },
+  logoTitleImage: {
+    width: 500,
+    height: 100,
+    resizeMode: 'contain',
   },
   loginContainer: {
     flex: 1,
-    height: '100%',
     alignItems: 'center',
-    justifyContent: 'center',
   },
   cardContainer: {
-    flex: 0.4,
     borderRadius: 22,
     padding: 22,
-    alignItems: 'center',
     width: '90%',
-    //backgroundColor: '#C8C8',
-    //justifyContent: 'space-between',
-    //justifyContent: 'center',
   },
-  fieldsdContainer: {
-    //flex: 1,
-    // backgroundColor: 'red',
-    width: '100%',
-    height: 200,
+  fieldsContainer: {
     alignItems: 'center',
-    justifyContent: 'space-around',
+    marginBottom: 20,
   },
-
-  signInSubtitleContainer: {
-    paddingRight: 30,
-    paddingLeft: 30,
-    paddingTop: 12,
-    paddingBottom: 12,
+  signinTextContainer: {
     backgroundColor: 'white',
-    borderWidth: 2,
-    borderColor: 'black',
-    borderRadius: 15,
-    marginTop: 5,
+    padding: 10,
+    borderRadius: 12,
+    borderWidth: 3,
   },
-
-  signInSubtitle: {
+  title: {
     fontSize: 21,
     fontFamily: 'PressStart2P-Regular',
-  },
-  userameContainer: {
-    flex: 1,
-    alignItems: 'center',
-    width: '100%',
+    textAlign: 'center',
   },
   inputField: {
     backgroundColor: 'white',
     borderWidth: 2,
     borderColor: 'black',
     fontFamily: 'PressStart2P-Regular',
-    height: 50, // Set a reasonable height
+    height: 50,
     width: '100%',
     marginTop: 7,
-    marginBottom: 10,
     paddingHorizontal: 10,
     borderRadius: 10,
   },
-  usernameInput: {
-    //flex: 1,
-  },
-  passwordContainer: {
-    flex: 1,
-    alignItems: 'center',
-    width: '100%',
-  },
-  passwordInput: {
-    //flex: 1,
-  },
   actionContainer: {
-    width: '100%',
-    padding: 0,
-    margin: 0,
     alignItems: 'center',
-    height: 100,
-    justifyContent: 'space-around',
   },
-  loginButton: {
+  button: {
     borderWidth: 2,
     borderColor: 'black',
-    paddingTop: 11,
-    paddingBottom: 11,
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 12,
-    //justifyContent: 'center',
     backgroundColor: '#c48fb4',
-    //flex: 1,
+    marginBottom: 10,
   },
-  loginLink: {
+  buttonText: {
+    fontFamily: 'PressStart2P-Regular',
+    textAlign: 'center',
+    fontSize: 15,
+  },
+  link: {
     padding: 10,
-    flex: 1,
+    borderRadius: 10,
+    backgroundColor: '#78c470',
   },
-  loginLinkText: {
+  linkText: {
     fontFamily: 'PressStart2P-Regular',
     textDecorationLine: 'underline',
-    padding: 6,
     fontSize: 10,
-    fontWeight: 'normal',
-    backgroundColor: '#78c470',
-    borderRadius: 10,
-  },
-  submitText: {
-    fontFamily: 'PressStart2P-Regular',
-    textAlign: 'center', // Center text horizontally
-    fontSize: 15, // Adjust font size as needed
-    // TODO fix sign button and logo title and scrollview
   },
 });
 export default Login;

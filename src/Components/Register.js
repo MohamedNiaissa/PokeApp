@@ -5,7 +5,6 @@ import {
   View,
   StyleSheet,
   TouchableOpacity,
-  Button,
   Image,
   ScrollView,
   ImageBackground,
@@ -39,7 +38,6 @@ const Register = ({navigation}) => {
       freeStyleCropEnabled: true,
       mediaType: 'photo',
     }).then(image => {
-      console.log('imageeeee', image);
       setProfilePictureLink(image.path);
     });
   };
@@ -70,17 +68,16 @@ const Register = ({navigation}) => {
           <ImageBackground
             source={GrassBackground}
             style={styles.backgroundImage}>
+            <View style={styles.logoTitleContainer}>
+              <Image
+                style={styles.logoTitleImage}
+                source={require('../assets/PokeChoose-logo.png')}
+              />
+            </View>
             <View style={styles.loginContainer}>
               <View style={styles.cardContainer}>
                 <View style={styles.fieldsContainer}>
-                  <View
-                    style={{
-                      backgroundColor: 'white',
-                      padding: 10,
-                      /* width: 200,*/
-                      borderRadius: 12,
-                      borderWidth: 3,
-                    }}>
+                  <View style={styles.signupTextContainer}>
                     <Text style={styles.title}> Sign Up </Text>
                   </View>
                   <TextInput
@@ -112,7 +109,7 @@ const Register = ({navigation}) => {
                     <Text style={styles.buttonText}>Create Account</Text>
                   </TouchableOpacity>
                   <TouchableOpacity style={styles.link} onPress={goToLoginPage}>
-                    <Text style={styles.linkText}>Already registered?</Text>
+                    <Text style={styles.linkText}>Already registered ?</Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -138,31 +135,37 @@ const styles = StyleSheet.create({
     flex: 1,
     resizeMode: 'cover',
   },
+  logoTitleContainer: {
+    alignItems: 'center',
+  },
+  logoTitleImage: {
+    width: 500,
+    height: 100,
+    resizeMode: 'contain',
+  },
   loginContainer: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
   },
   cardContainer: {
     borderRadius: 22,
     padding: 22,
     width: '90%',
-    //backgroundColor: 'rgba(200, 200, 200, 0.7)',
   },
   fieldsContainer: {
     alignItems: 'center',
     marginBottom: 20,
   },
+  signupTextContainer: {
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 12,
+    borderWidth: 3,
+  },
   title: {
     fontSize: 21,
-    //marginBottom: 10,
     fontFamily: 'PressStart2P-Regular',
-    textAlign: 'center', // Center the text horizontally
-    /*backgroundColor: 'white',
-    padding: 10,
-    width: 200,
-    borderRadius: 12,
-    borderWidth: 3,*/
+    textAlign: 'center',
   },
   inputField: {
     backgroundColor: 'white',
@@ -185,6 +188,9 @@ const styles = StyleSheet.create({
   profileImage: {
     width: 100,
     height: 100,
+    borderRadius: 10,
+    borderWidth: 2,
+    borderColor: 'black',
   },
   takePicContainer: {
     backgroundColor: '#48abd9',
@@ -217,13 +223,13 @@ const styles = StyleSheet.create({
   },
   link: {
     padding: 10,
+    borderRadius: 10,
+    backgroundColor: '#78c470',
   },
   linkText: {
     fontFamily: 'PressStart2P-Regular',
     textDecorationLine: 'underline',
     fontSize: 10,
-    backgroundColor: '#78c470',
-    borderRadius: 10,
   },
 });
 
