@@ -60,7 +60,12 @@ const Register = props => {
       const users = await getItem('users');
       if (users == null) {
         await setItem('users', [
-          {id: uniqueID, username: name, password: password},
+          {
+            id: uniqueID,
+            username: name,
+            profilePicture: profilePictureLink,
+            password: password,
+          },
         ]);
         dispatch(authActions.setUserId(uniqueID));
         dispatch(authActions.setUsername(name));
@@ -68,7 +73,12 @@ const Register = props => {
       } else {
         await setItem('users', [
           ...users,
-          {id: uniqueID, username: name, password: password},
+          {
+            id: uniqueID,
+            username: name,
+            profilePicture: profilePictureLink,
+            password: password,
+          },
         ]);
         dispatch(authActions.setUserId(uniqueID));
         dispatch(authActions.setUsername(name));
