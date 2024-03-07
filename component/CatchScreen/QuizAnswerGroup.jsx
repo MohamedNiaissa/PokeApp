@@ -19,6 +19,12 @@ const QuizAnswerGroup = ({answer,wrongAnswer,type,handleAnswer}) =>{
     const [sound,setSound] = useState({})
     const [wrongSound, setWrongSound] = useState({})
 
+    const answerLeft= coinFlip === 1 ? answer : wrongAnswer
+    const answerRight = coinFlip === 1 ?  wrongAnswer: answer
+
+
+
+
     useEffect(()=>{
         (()=>{
             console.log("type",type)
@@ -49,14 +55,14 @@ const QuizAnswerGroup = ({answer,wrongAnswer,type,handleAnswer}) =>{
         <>
             {type !== "cry" && (
                 <View style={style.choiceDiv}>
-                    <TouchableOpacity style={style.button}>
+                    <TouchableOpacity style={style.button} onPress={()=>{handleAnswer(answerLeft,answer)}} >
                         <Text style={style.buttonText}>
-                            {coinFlip === 1 ? `${answer}` : `${wrongAnswer}` }
+                            { `${answerLeft}`}
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={style.button} onPress={()=>{handleAnswer}}>
+                    <TouchableOpacity style={style.button} onPress={()=>{handleAnswer(answerLeft,answer)}}>
                         <Text style={style.buttonText}>
-                            {coinFlip === 1 ? `${wrongAnswer}` : `${answer}` }
+                            {`${answerRight}`}
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -72,10 +78,10 @@ const QuizAnswerGroup = ({answer,wrongAnswer,type,handleAnswer}) =>{
                     </TouchableOpacity>
                 </View>
                 <View style={style.choiceDiv}>
-                    <TouchableOpacity style={style.button} onPress={()=>{}}>
+                    <TouchableOpacity style={style.button} onPress={()=>{handleAnswer(answerLeft,answer)}}>
                         <Text style={style.buttonText}>{"Left"}</Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={style.button} onPress={()=>{}}>
+                    <TouchableOpacity style={style.button} onPress={()=>{handleAnswer(answerRight,answer)}}>
                         <Text style={style.buttonText}>{"Right"}</Text>
                     </TouchableOpacity>
                 </View>

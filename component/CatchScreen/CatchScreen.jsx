@@ -8,9 +8,23 @@ import QuizAnswerGroup from "./QuizAnswerGroup";
 const CatchScreen = () =>{
     const [pokemon,setPokemon] = useState({});
     const [wrongAnswer, setWrongAnswer] = useState()
+    const [reload,setReload] = useState(0)
     // paramater the user is quizzed on
     const [parameter, setParameter] = useState()
     const background = "https://static.wikia.nocookie.net/pokemoncrater/images/b/bc/Grass_Type.jpg/revision/latest?cb=20100315205316"
+
+    const handleAnswer = (answer, correctAnswer) =>{
+        console.log("answered")
+        if(correctAnswer === answer){
+            //addPokemon to collection
+            //pokemon is accessible through the state
+            console.log(pokemon)
+            setReload(reload + 1)
+        }else{
+            setReload(reload + 1)
+        }
+
+    }
 
 
     useEffect(()=>{
@@ -27,7 +41,7 @@ const CatchScreen = () =>{
            }
            setPokemon(pokemon);
         })()
-    },[])
+    },[reload])
 
 
     return(
@@ -43,7 +57,7 @@ const CatchScreen = () =>{
                             }}/>
                         <Text style={style.pokeViewText} >{pokemon.name}</Text>
                     </View>
-                    <QuizAnswerGroup answer={pokemon[parameter]} wrongAnswer={wrongAnswer} type={parameter}></QuizAnswerGroup>
+                    <QuizAnswerGroup answer={pokemon[parameter]} wrongAnswer={wrongAnswer} type={parameter} handleAnswer={handleAnswer}></QuizAnswerGroup>
                 </View>
             )}
         </ImageBackground>
