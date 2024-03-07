@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useMemo, useState} from 'react';
+import React, {useCallback, useMemo, useState} from 'react';
 import {
   Text,
   TextInput,
@@ -8,20 +8,20 @@ import {
   Button,
   Image,
   ScrollView,
+  ImageBackground,
+  SafeAreaView,
 } from 'react-native';
-import {useDispatch, useSelector} from 'react-redux';
+import {useDispatch} from 'react-redux';
 import {actions as authActions} from '../redux/reducers/authreducer';
 import {getItem, setItem} from '../helper/asyncStorageHelper';
 import ImagePicker from 'react-native-image-crop-picker';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import GrassBackground from '../assets/Grass_Background.webp';
 
-const Register = props => {
-  const {navigation} = props;
+const Register = ({navigation}) => {
   const dispatch = useDispatch();
 
   const [name, setName] = useState('');
   const [password, setPassword] = useState('');
-
   const [profilePictureLink, setProfilePictureLink] = useState(
     'https://picsum.photos/200/300',
   );
@@ -36,21 +36,12 @@ const Register = props => {
   const takeProfilPicture = () => {
     ImagePicker.openCamera({
       cropping: true,
-      // showCropFrame: true,
-      // showCropGuidelines:true,
-      // multiple:true,
       freeStyleCropEnabled: true,
       mediaType: 'photo',
-      // cropperToolbarTitle:'',
-      // cropperCircleOverlay:true
-      // showCropGuidelines:false,
-      // showCropFrame:false,
-      // hideBottomControls: true, //to hide bottom
     }).then(image => {
       console.log('imageeeee', image);
       setProfilePictureLink(image.path);
     });
-    return null;
   };
 
   const signUp = useCallback(async () => {
@@ -58,144 +49,182 @@ const Register = props => {
       dispatch(authActions.connectUser());
       const uniqueID = Date.now().toString();
       const users = await getItem('users');
-      if (users == null) {
-        await setItem('users', [
-          {
-            id: uniqueID,
-            username: name,
-            profilePicture: profilePictureLink,
-            password: password,
-          },
-        ]);
-        dispatch(authActions.setUserId(uniqueID));
-        dispatch(authActions.setUsername(name));
-        dispatch(authActions.setProfilePicture(profilePictureLink));
-      } else {
-        await setItem('users', [
-          ...users,
-          {
-            id: uniqueID,
-            username: name,
-            profilePicture: profilePictureLink,
-            password: password,
-          },
-        ]);
-        dispatch(authActions.setUserId(uniqueID));
-        dispatch(authActions.setUsername(name));
-        dispatch(authActions.setProfilePicture(profilePictureLink));
-      }
+      const newUser = {
+        id: uniqueID,
+        username: name,
+        profilePicture: profilePictureLink,
+        password: password,
+      };
+      const updatedUsers = users ? [...users, newUser] : [newUser];
+      await setItem('users', updatedUsers);
+      dispatch(authActions.setUserId(uniqueID));
+      dispatch(authActions.setUsername(name));
+      dispatch(authActions.setProfilePicture(profilePictureLink));
     }
   }, [checkFormValidity, dispatch, name, password, profilePictureLink]);
 
   return (
-    <ScrollView contentContainerStyle={styles.scrollContainer}>
-      <View style={styles.registerContainer}>
-        <View style={styles.cardContainer}>
-          <View style={styles.userameContainer}>
-            <Text>Pseudo</Text>
-            <TextInput
-              value={name}
-              onChangeText={setName}
-              style={[styles.inputField, styles.usernameInput]}
-              placeholder={'Votre nom'}
-            />
-          </View>
-          <View style={styles.passwordContainer}>
-            <Text>Mot de passe</Text>
-            <TextInput
-              value={password}
-              onChangeText={setPassword}
-              style={[styles.inputField, styles.passwordInput]}
-              placeholder={'Votre mot de passe'}
-            />
-          </View>
-          <View style={styles.pictureContainer} title="Camera">
-            <Text>Votre photo</Text>
-            <TouchableOpacity onPress={takeProfilPicture}>
-              <Icon name="photo" size={30} color="black" />
-            </TouchableOpacity>
-            <Image
-              source={{
-                uri: profilePictureLink,
-              }}
-              style={styles.picturePreview}
-            />
-          </View>
-
-          <TouchableOpacity style={styles.registerButton} onPress={signUp}>
-            <Text> S'inscrire </Text>
-          </TouchableOpacity>
-          <TouchableOpacity styles={styles.loginLink} onPress={goToLoginPage}>
-            <Text style={styles.loginLinkText}> Déjà membre </Text>
-          </TouchableOpacity>
+    <SafeAreaView style={styles.container}>
+      <ScrollView contentContainerStyle={styles.scrollViewContent}>
+        <View style={styles.content}>
+          <ImageBackground
+            source={GrassBackground}
+            style={styles.backgroundImage}>
+            <View style={styles.loginContainer}>
+              <View style={styles.cardContainer}>
+                <View style={styles.fieldsContainer}>
+                  <View
+                    style={{
+                      backgroundColor: 'white',
+                      padding: 10,
+                      /* width: 200,*/
+                      borderRadius: 12,
+                      borderWidth: 3,
+                    }}>
+                    <Text style={styles.title}> Sign Up </Text>
+                  </View>
+                  <TextInput
+                    value={name}
+                    onChangeText={setName}
+                    style={styles.inputField}
+                    placeholder={'Username'}
+                  />
+                  <TextInput
+                    value={password}
+                    onChangeText={setPassword}
+                    style={styles.inputField}
+                    placeholder={'Password'}
+                  />
+                  <View style={styles.picFieldContainer}>
+                    <Image
+                      style={styles.profileImage}
+                      source={{uri: profilePictureLink}}
+                    />
+                    <TouchableOpacity
+                      onPress={takeProfilPicture}
+                      style={styles.takePicContainer}>
+                      <Text style={styles.takePicText}>Take a picture</Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+                <View style={styles.actionContainer}>
+                  <TouchableOpacity style={styles.button} onPress={signUp}>
+                    <Text style={styles.buttonText}>Create Account</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.link} onPress={goToLoginPage}>
+                    <Text style={styles.linkText}>Already registered?</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </ImageBackground>
         </View>
-      </View>
-    </ScrollView>
+      </ScrollView>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
-  scrollContainer: {
-    flexGrow: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  picturePreview: {
-    width: '20%',
-    height: '100%',
-  },
-  registerContainer: {
+  container: {
     flex: 1,
-    height: '100%',
+  },
+  scrollViewContent: {
+    flexGrow: 1,
+  },
+  content: {
+    flex: 1,
+  },
+  backgroundImage: {
+    flex: 1,
+    resizeMode: 'cover',
+  },
+  loginContainer: {
+    flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
   },
   cardContainer: {
-    flex: 0.45,
     borderRadius: 22,
     padding: 22,
-    alignItems: 'center',
     width: '90%',
-    backgroundColor: '#C8C8',
+    //backgroundColor: 'rgba(200, 200, 200, 0.7)',
   },
-  userameContainer: {
-    flex: 1,
-    flexDirection: 'row',
+  fieldsContainer: {
     alignItems: 'center',
-    width: '90%',
+    marginBottom: 20,
+  },
+  title: {
+    fontSize: 21,
+    //marginBottom: 10,
+    fontFamily: 'PressStart2P-Regular',
+    textAlign: 'center', // Center the text horizontally
+    /*backgroundColor: 'white',
+    padding: 10,
+    width: 200,
+    borderRadius: 12,
+    borderWidth: 3,*/
   },
   inputField: {
     backgroundColor: 'white',
     borderWidth: 2,
     borderColor: 'black',
-    height: '70%',
-    marginLeft: 30,
+    fontFamily: 'PressStart2P-Regular',
+    height: 50,
+    width: '100%',
+    marginTop: 7,
+    paddingHorizontal: 10,
+    borderRadius: 10,
   },
-  usernameInput: {
-    flex: 1,
-  },
-  passwordContainer: {
-    flex: 1,
+  picFieldContainer: {
+    marginTop: 10,
     flexDirection: 'row',
-    alignItems: 'center',
-    width: '90%',
-  },
-  passwordInput: {
-    flex: 1,
-  },
-  pictureContainer: {
-    flex: 1,
-    flexDirection: 'row',
-    width: '90%',
-    alignItems: 'center',
     justifyContent: 'space-around',
+    alignItems: 'center',
+    width: '100%',
   },
-  registerButton: {
-    marginTop: 20,
+  profileImage: {
+    width: 100,
+    height: 100,
+  },
+  takePicContainer: {
+    backgroundColor: '#48abd9',
+    padding: 20,
     borderWidth: 2,
     borderColor: 'black',
-    padding: 10,
+    borderRadius: 10,
+  },
+  takePicText: {
+    fontFamily: 'PressStart2P-Regular',
+    width: 100,
+    textAlign: 'center',
+  },
+  actionContainer: {
+    alignItems: 'center',
+  },
+  button: {
+    borderWidth: 2,
+    borderColor: 'black',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
     borderRadius: 12,
+    backgroundColor: '#c48fb4',
+    marginBottom: 10,
+  },
+  buttonText: {
+    fontFamily: 'PressStart2P-Regular',
+    textAlign: 'center',
+    fontSize: 15,
+  },
+  link: {
+    padding: 10,
+  },
+  linkText: {
+    fontFamily: 'PressStart2P-Regular',
+    textDecorationLine: 'underline',
+    fontSize: 10,
+    backgroundColor: '#78c470',
+    borderRadius: 10,
   },
 });
+
 export default Register;

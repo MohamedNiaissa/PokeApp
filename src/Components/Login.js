@@ -189,14 +189,12 @@ const styles = StyleSheet.create({
     //flex: 1,
   },
   actionContainer: {
-    flexDirection: 'row-reverse',
-    //backgroundColor: 'green',
     width: '100%',
     padding: 0,
     margin: 0,
-    alignItems: 'baseline',
+    alignItems: 'center',
     height: 100,
-    justifyContent: 'space-between',
+    justifyContent: 'space-around',
   },
   loginButton: {
     borderWidth: 2,
@@ -225,7 +223,7 @@ const styles = StyleSheet.create({
     fontFamily: 'PressStart2P-Regular',
     textAlign: 'center', // Center text horizontally
     fontSize: 15, // Adjust font size as needed
-    // TODO fix sign button and logo title and scrollview@
+    // TODO fix sign button and logo title and scrollview
   },
 });
 export default Login;
