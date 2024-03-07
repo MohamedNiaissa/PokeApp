@@ -1,6 +1,6 @@
-import {Text, TouchableOpacity, View} from "react-native";
+import {Image, Text, TouchableOpacity, View,} from "react-native";
 import style from "./CatchScreenStyle";
-import {useEffect, useState} from "react";
+import React, {useEffect, useState} from "react";
 import Sound from "react-native-sound";
 
 const playSound = (sound) =>{
@@ -13,21 +13,33 @@ const playSound = (sound) =>{
     }
 }
 
+const formatTypeAnswer= (answer) =>{
+    try{
+        if(answer.includes(",")){
+            const types = answer.split(",")
+            console.log("splitted",types)
+            answer = `${types[0]} ${types[1]}`
+            console.log("attempted formatting", answer)
+            return answer
+        }
+        return answer
+    }catch(e){
+        console.log(e)
+    }
+}
+
 
 const QuizAnswerGroup = ({answer,wrongAnswer,type,handleAnswer}) =>{
+    const soundImg = "https://cdn-icons-png.flaticon.com/512/95/95021.png"
     const coinFlip = Math.floor(Math.random() * 2) + 1
     const [sound,setSound] = useState({})
     const [wrongSound, setWrongSound] = useState({})
 
-    const answerLeft= coinFlip === 1 ? answer : wrongAnswer
-    const answerRight = coinFlip === 1 ?  wrongAnswer: answer
-
-
-
+    let answerRight = coinFlip === 1 ? answer : wrongAnswer
+    let answerLeft = coinFlip === 1 ? wrongAnswer: answer
 
     useEffect(()=>{
         (()=>{
-            console.log("type",type)
             if(type === "cry"){
                 console.log("cry", answer)
                 try{
@@ -49,32 +61,32 @@ const QuizAnswerGroup = ({answer,wrongAnswer,type,handleAnswer}) =>{
                 }
             }
         })()
-    },[type,answer,wrongAnswer])
+    },[type,answer,wrongAnswer,answerLeft,answerRight])
 
     return(
         <>
-            {type !== "cry" && (
+            {type !== "cry" &&  answer != undefined && (
                 <View style={style.choiceDiv}>
                     <TouchableOpacity style={style.button} onPress={()=>{handleAnswer(answerLeft,answer)}} >
                         <Text style={style.buttonText}>
-                            { `${answerLeft}`}
+                            {`${answerLeft}`}
                         </Text>
                     </TouchableOpacity>
-                    <TouchableOpacity style={style.button} onPress={()=>{handleAnswer(answerLeft,answer)}}>
+                    <TouchableOpacity style={style.button} onPress={()=>{handleAnswer(answerRight,answer)}}>
                         <Text style={style.buttonText}>
                             {`${answerRight}`}
                         </Text>
                     </TouchableOpacity>
                 </View>
             )}
-            {type === "cry" &&(
+            {type === "cry" && answer != undefined && (
                 <>
                 <View style={style.choiceDiv}>
                     <TouchableOpacity style={style.button} onPress={()=>{coinFlip === 1 ? playSound(sound) : playSound(wrongSound)}}>
-                        <Text style={style.buttonText}>{"soundTest"}</Text>
+                        <Image source={{uri:soundImg}} style={style.soundImg}></Image>
                     </TouchableOpacity>
                     <TouchableOpacity style={style.button} onPress={()=>{coinFlip === 1 ? playSound(wrongSound) : playSound(sound)}}>
-                        <Text style={style.buttonText}>{"soundTestWrong"}</Text>
+                        <Image source={{uri:soundImg}} style={style.soundImg}></Image>
                     </TouchableOpacity>
                 </View>
                 <View style={style.choiceDiv}>

@@ -31,6 +31,19 @@ const style = StyleSheet.create({
         fontSize:19,
         marginBottom:20,
     },
+    pkTextBottom:{
+        textAlign:"center",
+        fontFamily:"PressStart2P-Regular",
+        color:"black",
+        backgroundColor:"white",
+        borderStyle:"solid",
+        borderColor:"black",
+        borderRadius:8,
+        borderWidth:2,
+        padding:9,
+        fontSize:19,
+        marginBottom:75,
+    },
     pokeView:{
         display: "flex",
         alignItems:"center",
@@ -67,7 +80,13 @@ const style = StyleSheet.create({
     },
     buttonText:{
         fontFamily:"PressStart2P-Regular",
-        fontSize:15
+        fontSize:15,
+        textAlign:"center"
+    },
+    soundImg:{
+        height:50,
+        width:50,
+        opacity:0.5,
     }
 
 }
