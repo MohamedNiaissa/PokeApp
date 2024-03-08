@@ -1,16 +1,37 @@
-import React, {useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {Image, Text, View, ImageBackground, StyleSheet} from 'react-native';
 import GrassBackground from '../assets/Grass_Background.webp';
 import {useSelector} from 'react-redux';
+import {getItem} from '../helper/asyncStorageHelper';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profil = () => {
   const {username, profilePicture, userId} = useSelector(s => s.auth);
+  const [pokemonInPocket, setPokemonInPocket] = useState(0);
 
   useEffect(() => {
-    console.log('*****************');
-    console.log(userId);
-    console.log(profilePicture);
-    console.log('*****************');
+    console.log('efffeeeeeeect');
+    const fetchData = async () => {
+      try {
+        let pokedexs = await getItem('pokedex');
+        console.log(pokedexs);
+        if (pokedexs !== null) {
+          for (let i = 0; i < pokedexs.length; i++) {
+            console.log(pokedexs[i]);
+            console.log(Object.keys(pokedexs[i])[0]);
+            console.log(Object.keys(pokedexs[i])[0]);
+            let id = Object.keys(pokedexs[i])[0];
+            if (id === userId) {
+              setPokemonInPocket(Object.values(pokedexs[i])[0].length);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+
+    fetchData();
   }, []);
 
   return (
@@ -34,7 +55,7 @@ const Profil = () => {
           </View>
           <View style={styles.pokemonNumberContainer}>
             <Text style={styles.pokemonNumberText}>
-              123 pokemons in my pocket
+              {pokemonInPocket} pokemons in my pocket
             </Text>
           </View>
         </View>
