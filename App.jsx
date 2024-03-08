@@ -1,6 +1,6 @@
 import React from 'react';
 import {SafeAreaView, StyleSheet, Text} from 'react-native';
-import CatchScreen from "./src/Components/CatchScreen/CatchScreen";
+import CatchScreen from "./src/Screens/CatchScreen";
 
 const App = () => {
   return (

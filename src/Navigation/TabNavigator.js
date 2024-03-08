@@ -4,7 +4,7 @@ import Catch from '../Screens/Catch';
 import Library from '../Screens/Library';
 import Profil from '../Screens/Profil';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import CatchScreen from '../Components/CatchScreen/CatchScreen';
+import CatchScreen from '../Screens/CatchScreen';
 import {Image, StyleSheet, Text} from 'react-native';
 import Svg, {
   G,
