@@ -8,8 +8,7 @@ import CatchScreen from "./Components/CatchScreen/CatchScreen";
 const App = () => {
   return (
     <Provider store={store}>
-      {/*<RouteNavigation />*/}
-      <CatchScreen></CatchScreen>
+      <RouteNavigation />
     </Provider>
   );
 };

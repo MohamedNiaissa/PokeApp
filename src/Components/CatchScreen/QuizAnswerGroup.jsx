@@ -7,21 +7,19 @@ import playSound from "../../helper/soundHelper";
 const QuizAnswerGroup = ({answer, wrongAnswer, type, handleAnswer}) => {
   const soundImg = 'https://cdn-icons-png.flaticon.com/512/95/95021.png';
   const coinFlip = Math.floor(Math.random() * 2) + 1;
-  const [sound, setSound] = useState({});
-  const [wrongSound, setWrongSound] = useState({});
 
   let answerRight = coinFlip === 1 ? answer : wrongAnswer;
   let answerLeft = coinFlip === 1 ? wrongAnswer : answer;
 
-  useEffect(() => {
-    (() => {
-      if (type === 'cry') {
-        console.log('cry', answer);
-        setSound(answer);
-        setWrongSound(wrongAnswer);
-      }
-    })();
-  }, [type, answer, wrongAnswer, answerLeft, answerRight]);
+  // useEffect(() => {
+  //   (() => {
+  //     if (type === 'cry') {
+  //       console.log('cry', answer);
+  //       setSound(answer);
+  //       setWrongSound(wrongAnswer);
+  //     }
+  //   })();
+  // }, [type, answer, wrongAnswer, answerLeft, answerRight]);
 
   return (
     <>
@@ -49,14 +47,14 @@ const QuizAnswerGroup = ({answer, wrongAnswer, type, handleAnswer}) => {
             <TouchableOpacity
               style={style.buttonLeft}
               onPress={() => {
-                coinFlip === 1 ? playSound(sound) : playSound(wrongSound);
+                playSound(answerLeft)
               }}>
               <Image source={{uri: soundImg}} style={style.soundImg} />
             </TouchableOpacity>
             <TouchableOpacity
               style={style.buttonRight}
               onPress={() => {
-                coinFlip === 1 ? playSound(wrongSound) : playSound(sound);
+                playSound(answerRight)
               }}>
               <Image source={{uri: soundImg}} style={style.soundImg} />
             </TouchableOpacity>

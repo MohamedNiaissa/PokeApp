@@ -61,8 +61,7 @@ const getQuizParameter = async () => {
   //extracts a value and a key at random
   const key = quizzType[randomIndex];
   const value = parameters[key];
-  const answer = {quizzType: key, wrongAnswer: value};
-  return answer;
+  return {quizzType: key, wrongAnswer: value}
 };
 
 const getAllPokemonData = async limit => {

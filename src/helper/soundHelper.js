@@ -1,8 +1,9 @@
 import Sound from "react-native-sound";
 
 
-const playSound = sound => {
-    const s = new Sound(sound,
+const playSound = soundUrl => {
+    console.log(5,soundUrl)
+    const sound = new Sound(soundUrl,
     null,
         error => {
           if (error) {
@@ -11,9 +12,9 @@ const playSound = sound => {
         }
     )
     try {
-        s.play(() => {
+        sound.play(() => {
             console.log('success');
-            s.release()
+            sound.release()
         });
     } catch (e) {
         console.log(e);
