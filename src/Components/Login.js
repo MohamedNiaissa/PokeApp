@@ -49,7 +49,6 @@ const Login = props => {
           dispatch(authActions.setUsername(name));
           let pictureUrl = await getProfilePicture(users[i].id);
           dispatch(authActions.setProfilePicture(pictureUrl));
-          console.log('****M**M**M***MM*M**M***M*M');
           break;
         }
       }

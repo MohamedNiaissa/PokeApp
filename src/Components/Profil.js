@@ -12,16 +12,12 @@ const Profil = () => {
   const isFocused = useIsFocused();
 
   useEffect(() => {
-    console.log('efffeeeeeeect');
     const fetchData = async () => {
       try {
         let pokedexs = await getItem('pokedex');
         console.log(pokedexs);
         if (pokedexs !== null) {
           for (let i = 0; i < pokedexs.length; i++) {
-            console.log(pokedexs[i]);
-            console.log(Object.keys(pokedexs[i])[0]);
-            console.log(Object.keys(pokedexs[i])[0]);
             let id = Object.keys(pokedexs[i])[0];
             if (id === userId) {
               setPokemonInPocket(Object.values(pokedexs[i])[0].length);
