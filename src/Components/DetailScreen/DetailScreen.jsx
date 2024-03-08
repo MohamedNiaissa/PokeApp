@@ -2,16 +2,8 @@ import style from "./DetailScreenStyle";
 import {Image, ImageBackground, View, Text, TouchableOpacity} from "react-native";
 import React from "react";
 import Sound from "react-native-sound";
+import playSound from "../../helper/soundHelper";
 
-const playSound = sound => {
-    try {
-        sound.play(() => {
-            console.log('success');
-        });
-    } catch (e) {
-        console.log(e);
-    }
-};
 
 const DetailScreen = ({pokemon}) =>{
     const soundImg = 'https://cdn-icons-png.flaticon.com/512/95/95021.png';

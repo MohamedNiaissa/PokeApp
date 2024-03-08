@@ -2,31 +2,8 @@ import {Image, Text, TouchableOpacity, View} from 'react-native';
 import style from './CatchScreenStyle';
 import React, {useEffect, useState} from 'react';
 import Sound from 'react-native-sound';
+import playSound from "../../helper/soundHelper";
 
-const playSound = sound => {
-  try {
-    sound.play(() => {
-      console.log('success');
-    });
-  } catch (e) {
-    console.log(e);
-  }
-};
-
-const formatTypeAnswer = answer => {
-  try {
-    if (answer.includes(',')) {
-      const types = answer.split(',');
-      console.log('splitted', types);
-      answer = `${types[0]} ${types[1]}`;
-      console.log('attempted formatting', answer);
-      return answer;
-    }
-    return answer;
-  } catch (e) {
-    console.log(e);
-  }
-};
 
 const QuizAnswerGroup = ({answer, wrongAnswer, type, handleAnswer}) => {
   const soundImg = 'https://cdn-icons-png.flaticon.com/512/95/95021.png';
