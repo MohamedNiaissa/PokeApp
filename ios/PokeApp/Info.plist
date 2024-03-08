@@ -53,6 +53,10 @@
 	<false/>
 	<key>UIAppFonts</key>
 	<array>
+		<string>PressStart2P-Regular.ttf</string>
+	</array>
+	<key>UIAppFonts</key>
+	<array>
 		<string>AntDesign.ttf</string>
 		<string>Entypo.ttf</string>
 		<string>EvilIcons.ttf</string>

@@ -1,10 +1,17 @@
-import React from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Image, Text, View, ImageBackground, StyleSheet} from 'react-native';
 import GrassBackground from '../assets/Grass_Background.webp';
 import {useSelector} from 'react-redux';
 
 const Profil = () => {
-  const {username, profilePicture} = useSelector(s => s.auth);
+  const {username, profilePicture, userId} = useSelector(s => s.auth);
+
+  useEffect(() => {
+    console.log('*****************');
+    console.log(userId);
+    console.log(profilePicture);
+    console.log('*****************');
+  }, []);
 
   return (
     <View style={styles.container}>

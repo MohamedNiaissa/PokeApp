@@ -4,6 +4,7 @@ import Catch from './Catch';
 import Library from './Library';
 import Profil from './Profil';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import CatchScreen from './CatchScreen/CatchScreen';
 import {Image, StyleSheet} from 'react-native';
 import Svg, {
   G,
@@ -51,8 +52,9 @@ const TabNavigator = ({route}) => {
       />
       <Tab.Screen
         name="Catch"
-        component={Catch}
+        component={CatchScreen}
         options={({}) => ({
+          header: () => null,
           tabBarIcon: ({color, size}) => (
             <Svg
               width="49"

@@ -22,6 +22,8 @@ const slice = createSlice({
       state.username = action.payload;
     },
     setProfilePicture: (state, action) => {
+      console.log('seeeeeeeeeeeeet');
+      console.log(action.payload);
       state.profilePicture = action.payload;
     },
   },
