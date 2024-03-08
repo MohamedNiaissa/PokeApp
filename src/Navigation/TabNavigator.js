@@ -1,10 +1,10 @@
 import React, {useCallback} from 'react';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
-import Catch from './Catch';
-import Library from './Library';
-import Profil from './Profil';
+import Catch from '../Screens/Catch';
+import Library from '../Screens/Library';
+import Profil from '../Screens/Profil';
 import Icon from 'react-native-vector-icons/FontAwesome';
-import CatchScreen from './CatchScreen/CatchScreen';
+import CatchScreen from '../Components/CatchScreen/CatchScreen';
 import {Image, StyleSheet} from 'react-native';
 import Svg, {
   G,

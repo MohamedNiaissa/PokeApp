@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import apiHelper from '../../api/apiHelper.js';
 import {useSelector} from 'react-redux';
-import styles from './LibraryScreen/style/Library';
+import styles from '../Components/LibraryScreen/LibraryStyle';
 import {useIsFocused} from '@react-navigation/native';
 
 const renderItem = ({item}) => {
