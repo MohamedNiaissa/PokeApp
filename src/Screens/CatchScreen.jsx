@@ -7,12 +7,12 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native';
-import apiHelper from '../../../api/apiHelper';
+import apiHelper from '../../api/apiHelper';
 import {useEffect, useState} from 'react';
-import style from './CatchScreenStyle';
-import QuizAnswerGroup from './QuizAnswerGroup';
-import FlavorText from './FlavorText';
-import {getItem, setItem} from '../../helper/asyncStorageHelper';
+import style from '../Components/CatchScreen/CatchScreenStyle';
+import QuizAnswerGroup from '../Components/CatchScreen/QuizAnswerGroup';
+import FlavorText from '../Components/CatchScreen/FlavorText';
+import {getItem, setItem} from '../helper/asyncStorageHelper';
 import {useSelector} from 'react-redux';
 
 const CatchScreen = () => {
