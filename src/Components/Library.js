@@ -5,7 +5,6 @@ import {
   Image,
   ImageBackground,
   SafeAreaView,
-  StyleSheet,
   Text,
   TouchableOpacity,
   View,
@@ -13,6 +12,7 @@ import {
 import apiHelper from '../../api/apiHelper.js';
 import {useSelector} from 'react-redux';
 import styles from './LibraryScreen/style/Library';
+import {useIsFocused} from '@react-navigation/native';
 
 const renderItem = ({item}) => {
   return (
@@ -35,6 +35,7 @@ const backgroundImage = {
 };
 
 const Library = () => {
+  const isFocused = useIsFocused();
   useEffect(() => {
     async function t() {
       const myValue = await getItem('users');
@@ -48,12 +49,12 @@ const Library = () => {
   const [pokemon, setPokemon] = useState([]);
   useEffect(() => {
     const fetchPokemon = async () => {
-      const pokemons = await apiHelper.getAllPokemonData(15);
+      const pokemons = await apiHelper.getAllPokemonData(100);
       setPokemon(pokemons);
     };
     fetchPokemon();
   }, []);
-  const {username, profilePicture, userId} = useSelector(s => s.auth);
+  const {userId} = useSelector(s => s.auth);
   const [pokemonCaptured, setPokemonCaptured] = useState([]);
   useEffect(() => {
     const fetchPokemon = async () => {
@@ -70,7 +71,6 @@ const Library = () => {
                 pokemons = [...pokemons, result];
               }
               setPokemonCaptured(pokemons);
-              console.log(pokemons);
             }
           }
         }
@@ -79,7 +79,7 @@ const Library = () => {
       }
     };
     fetchPokemon();
-  }, []);
+  }, [isFocused, userId]);
 
   const [mode = true, setMode] = useState();
 
