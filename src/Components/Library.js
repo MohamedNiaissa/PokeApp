@@ -102,7 +102,7 @@ const Library = () => {
           </TouchableOpacity>
           <TouchableOpacity onPress={onLibraryPress}>
             <Text style={[styles.tabBtn, {fontFamily: 'PressStart2P-Regular'}]}>
-              LIBRARY
+              POKEDEX
             </Text>
           </TouchableOpacity>
         </View>
