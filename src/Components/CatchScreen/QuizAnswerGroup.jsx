@@ -1,7 +1,6 @@
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import style from './CatchScreenStyle';
 import React, {useEffect, useState} from 'react';
-import Sound from 'react-native-sound';
 import playSound from "../../helper/soundHelper";
 
 
@@ -18,23 +17,8 @@ const QuizAnswerGroup = ({answer, wrongAnswer, type, handleAnswer}) => {
     (() => {
       if (type === 'cry') {
         console.log('cry', answer);
-        try {
-          const sound = new Sound(answer, null, error => {
-            if (error) {
-              console.log(error);
-            }
-          });
-          const wrongSound = new Sound(wrongAnswer, null, error => {
-            if (error) {
-              console.log(error);
-            }
-          });
-          playSound(sound);
-          setSound(sound);
-          setWrongSound(wrongSound);
-        } catch (e) {
-          console.log(e);
-        }
+        setSound(answer);
+        setWrongSound(wrongAnswer);
       }
     })();
   }, [type, answer, wrongAnswer, answerLeft, answerRight]);
