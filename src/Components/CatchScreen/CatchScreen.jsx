@@ -92,33 +92,35 @@ const CatchScreen = () => {
   }, [reload]);
 
   return (
-    <ImageBackground source={{uri: background}} style={style.background}>
-      {pokemon && (
-        <View style={style.flex}>
-          <Text style={style.pkText}>
-            What's {pokemon.name}'s {parameter} ?
-          </Text>
-          {pokemon.sprite && (
-            <View style={style.pokeView}>
-              <Image
-                style={style.pokemon}
-                source={{
-                  uri: pokemon.sprite,
-                }}
-              />
-              <Text style={style.pokeViewText}>{pokemon.name}</Text>
-            </View>
-          )}
-          <QuizAnswerGroup
-            answer={pokemon[parameter]}
-            wrongAnswer={wrongAnswer}
-            type={parameter}
-            handleAnswer={handleAnswer}
-          />
-        </View>
-      )}
-      <FlavorText mode={flavorText} />
-    </ImageBackground>
+    <SafeAreaView>
+      <ImageBackground source={{uri: background}} style={style.background}>
+        {pokemon && (
+          <View style={style.flex}>
+            <Text style={style.pkText}>
+              What's {pokemon.name}'s {parameter} ?
+            </Text>
+            {pokemon.sprite && (
+              <View style={style.pokeView}>
+                <Image
+                  style={style.pokemon}
+                  source={{
+                    uri: pokemon.sprite,
+                  }}
+                />
+                <Text style={style.pokeViewText}>{pokemon.name}</Text>
+              </View>
+            )}
+            <QuizAnswerGroup
+              answer={pokemon[parameter]}
+              wrongAnswer={wrongAnswer}
+              type={parameter}
+              handleAnswer={handleAnswer}
+            />
+          </View>
+        )}
+        <FlavorText mode={flavorText} />
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 

@@ -47,7 +47,7 @@ const TabNavigator = ({route}) => {
           tabBarInactiveTintColor: 'gray',
           tabBarStyle: {
             backgroundColor: '#ebf5ac',
-            height: 70,
+            height: 90,
           },
         })}
       />
@@ -76,7 +76,7 @@ const TabNavigator = ({route}) => {
           tabBarInactiveTintColor: 'gray',
           tabBarStyle: {
             backgroundColor: '#ebf5ac',
-            height: 70,
+            height: 90,
           },
         })}
       />
@@ -113,7 +113,7 @@ const TabNavigator = ({route}) => {
           tabBarInactiveTintColor: 'gray',
           tabBarStyle: {
             backgroundColor: '#ebf5ac',
-            height: 70,
+            height: 90,
           },
         })}
       />

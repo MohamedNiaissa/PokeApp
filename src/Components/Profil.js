@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   logoTitleContainer: {
+    marginTop: 20,
     alignItems: 'center',
   },
   logoTitleImage: {
