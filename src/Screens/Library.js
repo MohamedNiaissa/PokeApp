@@ -13,6 +13,7 @@ import apiHelper from '../../api/apiHelper.js';
 import {useSelector} from 'react-redux';
 import styles from '../Components/LibraryScreen/LibraryStyle';
 import {useIsFocused, useNavigation} from '@react-navigation/native';
+import LibraryButtons from '../Components/LibraryScreen/LibraryButtons';
 
 const backgroundImage = {
   uri: 'https://images-ext-1.discordapp.net/external/bpnz1mgvLmSzMmGVy4Jxwe6dxvDt8xPQtFZQDAhOif8/%3Fcb%3D20100315205316/https/static.wikia.nocookie.net/pokemoncrater/images/b/bc/Grass_Type.jpg/revision/latest?format=webp&width=892&height=892',
@@ -32,11 +33,9 @@ const Library = () => {
   }, []);
 
   const renderItem = ({item}) => {
-    console.log(18, item);
     return (
       <TouchableOpacity
         onPress={() => {
-          console.log(39, item);
           navigation.navigate('Detail', {
             cry: item.cry,
             weight: item.weight,
@@ -96,29 +95,12 @@ const Library = () => {
   }, [isFocused, userId]);
 
   const [mode = true, setMode] = useState();
-
-  const onPocketPress = () => {
-    setMode(false);
-  };
-
-  const onLibraryPress = () => {
-    setMode(true);
-  };
-
   return (
     <SafeAreaView style={styles.library}>
       <ImageBackground style={styles.backgroundImage} source={backgroundImage}>
         <View style={styles.tabView}>
-          <TouchableOpacity onPress={onPocketPress}>
-            <Text style={[styles.tabBtn, {fontFamily: 'PressStart2P-Regular'}]}>
-              POCKET
-            </Text>
-          </TouchableOpacity>
-          <TouchableOpacity onPress={onLibraryPress}>
-            <Text style={[styles.tabBtn, {fontFamily: 'PressStart2P-Regular'}]}>
-              POKEDEX
-            </Text>
-          </TouchableOpacity>
+          <LibraryButtons pocket setMode={setMode} />
+          <LibraryButtons setMode={setMode} />
         </View>
         <View>
           <View style={styles.pokeList}>
