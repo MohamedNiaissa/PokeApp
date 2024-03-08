@@ -64,13 +64,13 @@ const CatchScreen = () => {
       setPokemon({});
       setTimeout(() => {
         setReload(reload + 1);
-      }, 2000);
+      }, 1200);
     } else {
       setFlavorText('failed');
       setPokemon({});
       setTimeout(() => {
         setReload(reload + 1);
-      }, 2000);
+      }, 1200);
     }
   };
 

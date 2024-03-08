@@ -67,14 +67,14 @@ const QuizAnswerGroup = ({answer, wrongAnswer, type, handleAnswer}) => {
       {type !== 'cry' && answer != undefined && (
         <View style={style.choiceDiv}>
           <TouchableOpacity
-            style={style.button}
+            style={style.buttonLeft}
             onPress={() => {
               handleAnswer(answerLeft, answer);
             }}>
             <Text style={style.buttonText}>{`${answerLeft}`}</Text>
           </TouchableOpacity>
           <TouchableOpacity
-            style={style.button}
+            style={style.buttonRight}
             onPress={() => {
               handleAnswer(answerRight, answer);
             }}>
@@ -86,14 +86,14 @@ const QuizAnswerGroup = ({answer, wrongAnswer, type, handleAnswer}) => {
         <>
           <View style={style.choiceDiv}>
             <TouchableOpacity
-              style={style.button}
+              style={style.buttonLeft}
               onPress={() => {
                 coinFlip === 1 ? playSound(sound) : playSound(wrongSound);
               }}>
               <Image source={{uri: soundImg}} style={style.soundImg} />
             </TouchableOpacity>
             <TouchableOpacity
-              style={style.button}
+              style={style.buttonRight}
               onPress={() => {
                 coinFlip === 1 ? playSound(wrongSound) : playSound(sound);
               }}>
@@ -102,14 +102,14 @@ const QuizAnswerGroup = ({answer, wrongAnswer, type, handleAnswer}) => {
           </View>
           <View style={style.choiceDiv}>
             <TouchableOpacity
-              style={style.button}
+              style={style.buttonLeft}
               onPress={() => {
                 handleAnswer(answerLeft, answer);
               }}>
               <Text style={style.buttonText}>{'Left'}</Text>
             </TouchableOpacity>
             <TouchableOpacity
-              style={style.button}
+              style={style.buttonRight}
               onPress={() => {
                 handleAnswer(answerRight, answer);
               }}>
