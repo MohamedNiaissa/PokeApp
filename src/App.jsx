@@ -2,8 +2,7 @@ import React from 'react';
 import {StyleSheet} from 'react-native';
 import {Provider} from 'react-redux';
 import {store} from './store';
-import RouteNavigation from './Components/RouteNavigation';
-
+import RouteNavigation from './Navigation/RouteNavigation';
 const App = () => {
   return (
     <Provider store={store}>
