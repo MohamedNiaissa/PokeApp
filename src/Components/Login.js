@@ -31,6 +31,14 @@ const Login = props => {
     navigation.navigate('SignUp');
   };
 
+  const getProfilePicture = async iduser => {
+    let users = await getItem('users');
+    for (let i = 0; i < users.length; i++) {
+      if (users[i].id === iduser) {
+        return users[i].profilePicture;
+      }
+    }
+  };
   const logUser = useCallback(async () => {
     const users = await getItem('users');
     if (users !== null) {
@@ -39,6 +47,8 @@ const Login = props => {
           dispatch(authActions.connectUser());
           dispatch(authActions.setUserId(users[i].id));
           dispatch(authActions.setUsername(name));
+          let pictureUrl = await getProfilePicture(users[i].id);
+          dispatch(authActions.setProfilePicture(pictureUrl));
           break;
         }
       }
