@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {actions as authActions} from '../redux/reducers/authreducer';
 import {useDispatch, useSelector} from 'react-redux';
-import GrassBackground from '../assets/Grass_Background.webp';
+import GrassBackground from '../assets/images/Grass_Background.webp';
 
 import {getItem, setItem} from '../helper/asyncStorageHelper';
 const Login = props => {
@@ -69,7 +69,7 @@ const Login = props => {
             <View style={styles.logoTitleContainer}>
               <Image
                 style={styles.logoTitleImage}
-                source={require('../assets/PokeChoose-logo.png')}
+                source={require('../assets/images/PokeChoose-logo.png')}
               />
             </View>
             <View style={styles.loginContainer}>

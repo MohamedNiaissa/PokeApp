@@ -7,12 +7,12 @@ import {
   Button,
   TouchableOpacity,
 } from 'react-native';
-import apiHelper from '../../../api/apiHelper';
+import apiHelper from '../../api/apiHelper';
 import {useEffect, useState} from 'react';
-import style from './CatchScreenStyle';
-import QuizAnswerGroup from './QuizAnswerGroup';
-import FlavorText from './FlavorText';
-import {getItem, setItem} from '../../helper/asyncStorageHelper';
+import style from '../Components/CatchScreen/CatchScreenStyle';
+import QuizAnswerGroup from '../Components/CatchScreen/QuizAnswerGroup';
+import FlavorText from '../Components/CatchScreen/FlavorText';
+import {getItem, setItem} from '../helper/asyncStorageHelper';
 import {useSelector} from 'react-redux';
 
 const CatchScreen = () => {
@@ -92,33 +92,35 @@ const CatchScreen = () => {
   }, [reload]);
 
   return (
-    <ImageBackground source={{uri: background}} style={style.background}>
-      {pokemon && (
-        <View style={style.flex}>
-          <Text style={style.pkText}>
-            What's {pokemon.name}'s {parameter} ?
-          </Text>
-          {pokemon.sprite && (
-            <View style={style.pokeView}>
-              <Image
-                style={style.pokemon}
-                source={{
-                  uri: pokemon.sprite,
-                }}
-              />
-              <Text style={style.pokeViewText}>{pokemon.name}</Text>
-            </View>
-          )}
-          <QuizAnswerGroup
-            answer={pokemon[parameter]}
-            wrongAnswer={wrongAnswer}
-            type={parameter}
-            handleAnswer={handleAnswer}
-          />
-        </View>
-      )}
-      <FlavorText mode={flavorText} />
-    </ImageBackground>
+    <SafeAreaView>
+      <ImageBackground source={{uri: background}} style={style.background}>
+        {pokemon && (
+          <View style={style.flex}>
+            <Text style={style.pkText}>
+              What's {pokemon.name}'s {parameter} ?
+            </Text>
+            {pokemon.sprite && (
+              <View style={style.pokeView}>
+                <Image
+                  style={style.pokemon}
+                  source={{
+                    uri: pokemon.sprite,
+                  }}
+                />
+                <Text style={style.pokeViewText}>{pokemon.name}</Text>
+              </View>
+            )}
+            <QuizAnswerGroup
+              answer={pokemon[parameter]}
+              wrongAnswer={wrongAnswer}
+              type={parameter}
+              handleAnswer={handleAnswer}
+            />
+          </View>
+        )}
+        <FlavorText mode={flavorText} />
+      </ImageBackground>
+    </SafeAreaView>
   );
 };
 

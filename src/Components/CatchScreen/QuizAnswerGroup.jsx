@@ -2,6 +2,7 @@ import {Image, Text, TouchableOpacity, View} from 'react-native';
 import style from './CatchScreenStyle';
 import React, {useEffect, useState} from 'react';
 import Sound from 'react-native-sound';
+import QuizButton from "./QuizButton";
 
 const playSound = sound => {
   try {
@@ -43,20 +44,8 @@ const QuizAnswerGroup = ({answer, wrongAnswer, type, handleAnswer}) => {
     <>
       {type !== 'cry' && answer != undefined && (
         <View style={style.choiceDiv}>
-          <TouchableOpacity
-            style={style.buttonLeft}
-            onPress={() => {
-              handleAnswer(answerLeft, answer);
-            }}>
-            <Text style={style.buttonText}>{`${answerLeft}`}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={style.buttonRight}
-            onPress={() => {
-              handleAnswer(answerRight, answer);
-            }}>
-            <Text style={style.buttonText}>{`${answerRight}`}</Text>
-          </TouchableOpacity>
+          <QuizButton correctAnswer={answer} text={`${answerLeft}`} handleAnswer={handleAnswer} answer={answerLeft} btnStyle={style.buttonLeft}></QuizButton>
+          <QuizButton correctAnswer={answer} text={`${answerRight}`} handleAnswer={handleAnswer} answer={answerRight} btnStyle={style.buttonRight}></QuizButton>
         </View>
       )}
       {type === 'cry' && answer != undefined && (
@@ -78,20 +67,8 @@ const QuizAnswerGroup = ({answer, wrongAnswer, type, handleAnswer}) => {
             </TouchableOpacity>
           </View>
           <View style={style.choiceDiv}>
-            <TouchableOpacity
-              style={style.buttonLeft}
-              onPress={() => {
-                handleAnswer(answerLeft, answer);
-              }}>
-              <Text style={style.buttonText}>{'Left'}</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={style.buttonRight}
-              onPress={() => {
-                handleAnswer(answerRight, answer);
-              }}>
-              <Text style={style.buttonText}>{'Right'}</Text>
-            </TouchableOpacity>
+            <QuizButton correctAnswer={answer} text={'Left'} handleAnswer={handleAnswer} answer={answerLeft} btnStyle={style.buttonLeft}></QuizButton>
+            <QuizButton correctAnswer={answer} text={'Right'} handleAnswer={handleAnswer} answer={answerRight} btnStyle={style.buttonRight}></QuizButton>
           </View>
         </>
       )}
