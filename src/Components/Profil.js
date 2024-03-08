@@ -4,10 +4,12 @@ import GrassBackground from '../assets/Grass_Background.webp';
 import {useSelector} from 'react-redux';
 import {getItem} from '../helper/asyncStorageHelper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {useIsFocused} from '@react-navigation/native';
 
 const Profil = () => {
   const {username, profilePicture, userId} = useSelector(s => s.auth);
   const [pokemonInPocket, setPokemonInPocket] = useState(0);
+  const isFocused = useIsFocused();
 
   useEffect(() => {
     console.log('efffeeeeeeect');
@@ -31,8 +33,10 @@ const Profil = () => {
       }
     };
 
-    fetchData();
-  }, []);
+    if (isFocused) {
+      fetchData();
+    }
+  }, [isFocused]);
 
   return (
     <View style={styles.container}>
