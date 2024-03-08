@@ -1,12 +1,20 @@
-import React, {useEffect, useRef, useState} from 'react';
-import {Image, Text, View, ImageBackground, StyleSheet} from 'react-native';
+import React, {useCallback, useEffect, useState} from 'react';
+import {
+  Image,
+  Text,
+  View,
+  ImageBackground,
+  StyleSheet,
+  TouchableOpacity,
+} from 'react-native';
 import GrassBackground from '../assets/images/Grass_Background.webp';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
 import {getItem} from '../helper/asyncStorageHelper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useIsFocused} from '@react-navigation/native';
+import {actions as authActions} from '../redux/reducers/authreducer';
 
-const Profil = () => {
+const Profil = (callback, deps) => {
+  const dispatch = useDispatch();
   const {username, profilePicture, userId} = useSelector(s => s.auth);
   const [pokemonInPocket, setPokemonInPocket] = useState(0);
   const isFocused = useIsFocused();
@@ -32,7 +40,13 @@ const Profil = () => {
     if (isFocused) {
       fetchData();
     }
-  }, [isFocused]);
+  }, [isFocused, userId]);
+
+  const disconnect = useCallback(() => {
+    console.log('disconnect ?');
+    dispatch(authActions.clearData());
+    dispatch(authActions.disconnectUser());
+  }, [dispatch]);
 
   return (
     <View style={styles.container}>
@@ -59,6 +73,9 @@ const Profil = () => {
             </Text>
           </View>
         </View>
+        <TouchableOpacity onPress={disconnect} style={styles.SignOutBtn}>
+          <Text style={styles.SignOutBtnText}>Sign Out</Text>
+        </TouchableOpacity>
       </ImageBackground>
     </View>
   );
@@ -120,6 +137,21 @@ const styles = StyleSheet.create({
     fontFamily: 'PressStart2P-Regular',
     fontSize: 20,
     textAlign: 'center',
+  },
+  SignOutBtn: {
+    backgroundColor: '#FF7979',
+    padding: 20,
+    borderRadius: 8,
+    borderColor: 'black',
+    borderWidth: 2,
+    marginHorizontal: 90,
+    marginVertical: 18,
+  },
+  SignOutBtnText: {
+    fontFamily: 'PressStart2P-Regular',
+    color: 'black',
+    textAlign: 'center',
+    fontSize: 20,
   },
 });
 export default Profil;

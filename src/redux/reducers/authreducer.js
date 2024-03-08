@@ -24,6 +24,12 @@ const slice = createSlice({
     setProfilePicture: (state, action) => {
       state.profilePicture = action.payload;
     },
+    clearData: (state, action) => {
+      state.isLoggedIn = false;
+      state.userId = 0;
+      state.username = '';
+      state.profilePicture = 'https://picsum.photos/200/300';
+    },
   },
 });
 
