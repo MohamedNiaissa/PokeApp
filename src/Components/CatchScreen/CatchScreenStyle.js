@@ -28,7 +28,6 @@ const style = StyleSheet.create({
     borderWidth: 2,
     padding: 9,
     fontSize: 19,
-    marginBottom: 20,
   },
   pkTextBottom: {
     textAlign: 'center',
