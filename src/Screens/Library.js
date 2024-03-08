@@ -24,16 +24,6 @@ const backgroundImage = {
 const Library = () => {
   const navigation = useNavigation();
 
-  useEffect(() => {
-    async function t() {
-      const myValue = await getItem('users');
-      console.log('userData userData userData');
-      console.log(myValue);
-      console.log('userData userData userData');
-    }
-    t();
-  }, []);
-
   const renderItem = ({item}) => {
     return (
       <TouchableOpacity

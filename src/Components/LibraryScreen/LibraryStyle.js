@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 2,
     borderRadius: 8,
-    maxHeight: '80%',
+    maxHeight: 500,
   },
   pokeItem: {
     padding: 15,
