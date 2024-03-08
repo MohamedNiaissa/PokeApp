@@ -83,6 +83,8 @@ const getAllPokemonData = async limit => {
       type: stringType,
       cry: pokeData.cries.latest,
       sprite: pokeData.sprites.front_default,
+      height: pokeData.height,
+      weight: pokeData.weight,
     };
     pokemons.push(pokemon);
   }

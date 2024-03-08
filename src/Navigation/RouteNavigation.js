@@ -1,7 +1,7 @@
 import {NavigationContainer} from '@react-navigation/native';
 import TabNavigator from './TabNavigator';
-import Login from './Login';
-import Register from './Register';
+import Login from '../Screens/Login';
+import Register from '../Screens/Register';
 import React, {useCallback, useEffect, useState} from 'react';
 import {useDispatch, useSelector} from 'react-redux';
 import {actions as authActions} from '../redux/reducers/authreducer';
@@ -13,6 +13,7 @@ import {
   View,
 } from 'react-native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
+import DetailScreen from '../Components/DetailScreen/DetailScreen';
 
 const RouteNavigation = () => {
   const dispatch = useDispatch();
@@ -32,6 +33,7 @@ const RouteNavigation = () => {
             }}
             component={TabNavigator}
           />
+          <Stack.Screen name={'Detail'} component={DetailScreen} />
         </Stack.Navigator>
       ) : (
         <Stack.Navigator>
