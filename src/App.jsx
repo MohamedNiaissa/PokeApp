@@ -3,7 +3,6 @@ import {StyleSheet} from 'react-native';
 import {Provider} from 'react-redux';
 import {store} from './store';
 import RouteNavigation from './Components/RouteNavigation';
-import CatchScreen from "./Components/CatchScreen/CatchScreen";
 
 const App = () => {
   return (
