@@ -33,9 +33,11 @@
 	</dict>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
-	<key>NsCameraUsageDescription</key>
+	<key>NSCameraUsageDescription</key>
 	<string>PokeApi need the camera for profil picture</string>
-	<key>NsPhotoLibraryUsageDescription</key>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>PokeApi need the library for profil picture</string>
+	<key>NSMicrophoneUsageDescription</key>
 	<string>PokeApi need the library for profil picture</string>
 	<key>UIAppFonts</key>
 	<array>

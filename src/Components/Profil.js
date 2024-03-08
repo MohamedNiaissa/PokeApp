@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Image, Text, View, ImageBackground, StyleSheet} from 'react-native';
-import GrassBackground from '../assets/Grass_Background.webp';
+import GrassBackground from '../assets/images/Grass_Background.webp';
 import {useSelector} from 'react-redux';
 import {getItem} from '../helper/asyncStorageHelper';
 import AsyncStorage from '@react-native-async-storage/async-storage';
@@ -40,7 +40,7 @@ const Profil = () => {
         <View style={styles.logoTitleContainer}>
           <Image
             style={styles.logoTitleImage}
-            source={require('../assets/PokeChoose-logo.png')}
+            source={require('../assets/images/PokeChoose-logo.png')}
           />
         </View>
         <View style={styles.infoUserContainer}>
