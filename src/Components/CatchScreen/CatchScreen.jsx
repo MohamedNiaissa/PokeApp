@@ -12,24 +12,54 @@ import {useEffect, useState} from 'react';
 import style from './CatchScreenStyle';
 import QuizAnswerGroup from './QuizAnswerGroup';
 import FlavorText from './FlavorText';
+import {getItem, setItem} from '../../helper/asyncStorageHelper';
+import {useSelector} from 'react-redux';
 
 const CatchScreen = () => {
   const [pokemon, setPokemon] = useState({});
   const [wrongAnswer, setWrongAnswer] = useState();
   const [reload, setReload] = useState(0);
   const [flavorText, setFlavorText] = useState('catch');
+  const [findPokedex, setFindPokedex] = useState(false);
   // paramater the user is quizzed on
   const [parameter, setParameter] = useState();
   const background =
     'https://static.wikia.nocookie.net/pokemoncrater/images/b/bc/Grass_Type.jpg/revision/latest?cb=20100315205316';
+  const {userId, username, profilePicture} = useSelector(s => s.auth);
 
-  const handleAnswer = (answer, correctAnswer) => {
+  const handleAnswer = async (answer, correctAnswer) => {
     console.log('answered');
     console.log(answer);
+    console.log(userId);
     if (correctAnswer === answer) {
-      //addPokemon to collection
-      // TODO add pokemon to collection here or in place of the log
-      console.log(pokemon); //pokemon is accessible through the state
+      try {
+        let pokedex = await getItem('pokedex');
+        let newUserPokedex = [];
+
+        if (!pokedex) {
+          newUserPokedex.push({[userId]: [pokemon.id]});
+        } else {
+          let foundUser = false;
+
+          pokedex.forEach(userPokedex => {
+            if (userPokedex.hasOwnProperty(userId)) {
+              foundUser = true;
+              userPokedex[userId].push(pokemon.id);
+            }
+            newUserPokedex.push(userPokedex);
+          });
+
+          if (!foundUser) {
+            newUserPokedex.push({[userId]: [pokemon.id]});
+          }
+        }
+
+        await setItem('pokedex', newUserPokedex);
+        console.log('Pokédex updated:', newUserPokedex);
+        setFindPokedex(true);
+      } catch (error) {
+        console.error('Error while updating Pokédex:', error);
+      }
       setFlavorText('success');
       setPokemon({});
       setTimeout(() => {
