@@ -1,4 +1,4 @@
-import React, {useCallback, useEffect, useRef, useState} from 'react';
+import React, {useCallback, useEffect, useState} from 'react';
 import {
   Image,
   Text,
@@ -7,10 +7,9 @@ import {
   StyleSheet,
   TouchableOpacity,
 } from 'react-native';
-import GrassBackground from '../assets/Grass_Background.webp';
+import GrassBackground from '../assets/images/Grass_Background.webp';
 import {useSelector, useDispatch} from 'react-redux';
 import {getItem} from '../helper/asyncStorageHelper';
-import AsyncStorage from '@react-native-async-storage/async-storage';
 import {useIsFocused} from '@react-navigation/native';
 import {actions as authActions} from '../redux/reducers/authreducer';
 
@@ -41,10 +40,11 @@ const Profil = (callback, deps) => {
     if (isFocused) {
       fetchData();
     }
-  }, [isFocused]);
+  }, [isFocused, userId]);
 
   const disconnect = useCallback(() => {
     console.log('disconnect ?');
+    dispatch(authActions.clearData());
     dispatch(authActions.disconnectUser());
   }, [dispatch]);
 
@@ -54,7 +54,7 @@ const Profil = (callback, deps) => {
         <View style={styles.logoTitleContainer}>
           <Image
             style={styles.logoTitleImage}
-            source={require('../assets/PokeChoose-logo.png')}
+            source={require('../assets/images/PokeChoose-logo.png')}
           />
         </View>
         <View style={styles.infoUserContainer}>
@@ -90,6 +90,7 @@ const styles = StyleSheet.create({
     resizeMode: 'cover',
   },
   logoTitleContainer: {
+    marginTop: 20,
     alignItems: 'center',
   },
   logoTitleImage: {

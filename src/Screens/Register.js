@@ -14,7 +14,7 @@ import {useDispatch} from 'react-redux';
 import {actions as authActions} from '../redux/reducers/authreducer';
 import {getItem, setItem} from '../helper/asyncStorageHelper';
 import ImagePicker from 'react-native-image-crop-picker';
-import GrassBackground from '../assets/Grass_Background.webp';
+import GrassBackground from '../assets/images/Grass_Background.webp';
 
 const Register = ({navigation}) => {
   const dispatch = useDispatch();
@@ -71,7 +71,7 @@ const Register = ({navigation}) => {
             <View style={styles.logoTitleContainer}>
               <Image
                 style={styles.logoTitleImage}
-                source={require('../assets/PokeChoose-logo.png')}
+                source={require('../assets/images/PokeChoose-logo.png')}
               />
             </View>
             <View style={styles.loginContainer}>
