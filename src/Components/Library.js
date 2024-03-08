@@ -4,6 +4,7 @@ import {
   FlatList,
   Image,
   ImageBackground,
+  SafeAreaView,
   StyleSheet,
   Text,
   TouchableOpacity,
@@ -11,6 +12,7 @@ import {
 } from 'react-native';
 import apiHelper from '../../api/apiHelper.js';
 import {useSelector} from 'react-redux';
+import styles from './LibraryScreen/style/Library';
 
 const renderItem = ({item}) => {
   return (
@@ -51,17 +53,54 @@ const Library = () => {
     };
     fetchPokemon();
   }, []);
+  const {username, profilePicture, userId} = useSelector(s => s.auth);
+  const [pokemonCaptured, setPokemonCaptured] = useState([]);
+  useEffect(() => {
+    const fetchPokemon = async () => {
+      try {
+        let pokedexs = await getItem('pokedex');
+        if (pokedexs !== null) {
+          for (let i = 0; i < pokedexs.length; i++) {
+            let id = Object.keys(pokedexs[i])[0];
+            if (id === userId) {
+              let pokemons = [];
+              const pokedex = Object.values(pokedexs[i])[0];
+              for (let j = 0; j < Object.values(pokedexs[i])[0].length; j++) {
+                const result = await apiHelper.getPokemonData(pokedex[j]);
+                pokemons = [...pokemons, result];
+              }
+              setPokemonCaptured(pokemons);
+              console.log(pokemons);
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
+      }
+    };
+    fetchPokemon();
+  }, []);
+
+  const [mode = true, setMode] = useState();
+
+  const onPocketPress = () => {
+    setMode(false);
+  };
+
+  const onLibraryPress = () => {
+    setMode(true);
+  };
 
   return (
-    <View style={styles.library}>
+    <SafeAreaView style={styles.library}>
       <ImageBackground style={styles.backgroundImage} source={backgroundImage}>
         <View style={styles.tabView}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onPocketPress}>
             <Text style={[styles.tabBtn, {fontFamily: 'PressStart2P-Regular'}]}>
               POCKET
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={onLibraryPress}>
             <Text style={[styles.tabBtn, {fontFamily: 'PressStart2P-Regular'}]}>
               LIBRARY
             </Text>
@@ -69,67 +108,15 @@ const Library = () => {
         </View>
         <View>
           <View style={styles.pokeList}>
-            <FlatList data={pokemon} renderItem={renderItem} />
+            {mode && <FlatList data={pokemon} renderItem={renderItem} />}
+            {!mode && (
+              <FlatList data={pokemonCaptured} renderItem={renderItem} />
+            )}
           </View>
         </View>
       </ImageBackground>
-    </View>
+    </SafeAreaView>
   );
 };
-
-const styles = StyleSheet.create({
-  tabBtn: {
-    borderStyle: 'solid',
-    borderColor: 'black',
-    borderWidth: 2,
-    borderRadius: 8,
-    padding: 20,
-    fontSize: 20,
-    color: 'black',
-    backgroundColor: 'white',
-    fontFamily: 'PressStart2p-Regular',
-  },
-  backgroundImage: {
-    justifyContent: 'center',
-    width: '100%',
-    height: '100%',
-    flex: 1,
-    gap: 30,
-  },
-  library: {
-    flex: 1,
-    flexDirection: 'column',
-    gap: 40,
-    fontFamily: 'PressStart2p-Regular',
-    justifyContent: 'space-evenly',
-  },
-  tabView: {
-    display: 'flex',
-    gap: 10,
-    flexDirection: 'row',
-    justifyContent: 'space-evenly',
-  },
-  pokeList: {
-    backgroundColor: 'white',
-    width: '90%',
-    alignSelf: 'center',
-    borderStyle: 'solid',
-    borderColor: 'black',
-    borderWidth: 2,
-    borderRadius: 8,
-    maxHeight: '80%',
-  },
-  pokeItem: {
-    padding: 15,
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 20,
-  },
-  pokeItemImg: {
-    height: 50,
-    width: 50,
-  },
-  pokePoket: {},
-});
 
 export default Library;
