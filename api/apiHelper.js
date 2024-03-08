@@ -79,8 +79,8 @@ const getAllPokemonData = async limit => {
       stringType = `${types[0]}`;
     }
     const pokemon = {
-      id: randomIndex,
-      name: name,
+      id: i,
+      name: pokeData.name,
       type: stringType,
       cry: pokeData.cries.latest,
       sprite: pokeData.sprites.front_default,
@@ -91,4 +91,4 @@ const getAllPokemonData = async limit => {
   return pokemons;
 };
 
-export default {getPokemonData, getAllPokemonData, getQuizParameter};
+export default { getPokemonData, getAllPokemonData, getQuizParameter }
