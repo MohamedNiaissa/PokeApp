@@ -12,29 +12,14 @@ import {
 import apiHelper from '../../api/apiHelper.js';
 import {useSelector} from 'react-redux';
 import styles from '../Components/LibraryScreen/LibraryStyle';
-import {useIsFocused} from '@react-navigation/native';
-
-const renderItem = ({item}) => {
-  return (
-    <TouchableOpacity style={styles.pokeItem}>
-      <Image style={styles.pokeItemImg} source={{uri: item.sprite}} />
-      <Text
-        style={{
-          fontSize: 16,
-          fontFamily: 'PressStart2P-Regular',
-          color: 'black',
-        }}>
-        {item.name}
-      </Text>
-    </TouchableOpacity>
-  );
-};
+import {useIsFocused, useNavigation} from '@react-navigation/native';
 
 const backgroundImage = {
   uri: 'https://images-ext-1.discordapp.net/external/bpnz1mgvLmSzMmGVy4Jxwe6dxvDt8xPQtFZQDAhOif8/%3Fcb%3D20100315205316/https/static.wikia.nocookie.net/pokemoncrater/images/b/bc/Grass_Type.jpg/revision/latest?format=webp&width=892&height=892',
 };
 
 const Library = () => {
+  const navigation = useNavigation();
   const isFocused = useIsFocused();
   useEffect(() => {
     async function t() {
@@ -45,6 +30,35 @@ const Library = () => {
     }
     t();
   }, []);
+
+  const renderItem = ({item}) => {
+    console.log(18, item);
+    return (
+      <TouchableOpacity
+        onPress={() => {
+          console.log(39, item);
+          navigation.navigate('Detail', {
+            cry: item.cry,
+            weight: item.weight,
+            height: item.height,
+            sprite: item.sprite,
+            name: item.name,
+            types: item.types,
+          });
+        }}
+        style={styles.pokeItem}>
+        <Image style={styles.pokeItemImg} source={{uri: item.sprite}} />
+        <Text
+          style={{
+            fontSize: 16,
+            fontFamily: 'PressStart2P-Regular',
+            color: 'black',
+          }}>
+          {item.name}
+        </Text>
+      </TouchableOpacity>
+    );
+  };
 
   const [pokemon, setPokemon] = useState([]);
   useEffect(() => {
