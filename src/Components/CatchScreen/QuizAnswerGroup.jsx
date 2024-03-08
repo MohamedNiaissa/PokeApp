@@ -1,17 +1,17 @@
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import style from './CatchScreenStyle';
 import React, {useEffect, useState} from 'react';
-import Sound from "react-native-sound";
+import Sound from 'react-native-sound';
 
-  const playSound = sound => {
-    try {
-      sound.play(() => {
-        console.log('success');
-      });
-    } catch (e) {
-      console.log(e);
-    }
-  };
+const playSound = sound => {
+  try {
+    sound.play(() => {
+      console.log('success');
+    });
+  } catch (e) {
+    console.log(e);
+  }
+};
 
 const QuizAnswerGroup = ({answer, wrongAnswer, type, handleAnswer}) => {
   const soundImg = 'https://cdn-icons-png.flaticon.com/512/95/95021.png';
@@ -20,20 +20,20 @@ const QuizAnswerGroup = ({answer, wrongAnswer, type, handleAnswer}) => {
   let answerRight = coinFlip === 1 ? answer : wrongAnswer;
   let answerLeft = coinFlip === 1 ? wrongAnswer : answer;
 
-  const[soundLeft,setSoundLeft] = useState({})
-  const[soundRight,setSoundRight] = useState({})
+  const [soundLeft, setSoundLeft] = useState({});
+  const [soundRight, setSoundRight] = useState({});
 
   useEffect(() => {
     (() => {
       if (type === 'cry') {
-        try{
+        try {
           console.log('cry', answer);
-          const soundLeft = new Sound(answerRight)
-          const soundRight = new Sound(answerLeft)
+          const soundLeft = new Sound(answerLeft);
+          const soundRight = new Sound(answerRight);
           setSoundLeft(soundLeft);
           setSoundRight(soundRight);
-        }catch(e){
-          console.log(e)
+        } catch (e) {
+          console.log(e);
         }
       }
     })();
@@ -65,14 +65,14 @@ const QuizAnswerGroup = ({answer, wrongAnswer, type, handleAnswer}) => {
             <TouchableOpacity
               style={style.buttonLeft}
               onPress={() => {
-                playSound(soundLeft)
+                playSound(soundLeft);
               }}>
               <Image source={{uri: soundImg}} style={style.soundImg} />
             </TouchableOpacity>
             <TouchableOpacity
               style={style.buttonRight}
               onPress={() => {
-                playSound(soundRight)
+                playSound(soundRight);
               }}>
               <Image source={{uri: soundImg}} style={style.soundImg} />
             </TouchableOpacity>
