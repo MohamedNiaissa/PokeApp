@@ -26,6 +26,7 @@ const TabNavigator = ({route}) => {
         name="Library"
         component={Library}
         options={({}) => ({
+          header: () => null,
           tabBarIcon: ({color, size}) => (
             <Svg
               width="49"
