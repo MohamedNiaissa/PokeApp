@@ -1,3 +1,28 @@
+# Projet PokeQuiz
+
+## Présentation Rapide du Projet:
+Vous êtes un chasseur de Pokémon ayant la possibilité de capturer des Pokémon à travers un quiz (incluant cris, taille, poids, type). Vous pouvez également retrouver vos Pokémon capturés dans la section Pokédex.
+
+## Développeurs:
+- Mohamed Niaissa
+- Philémon Wild
+- Héloïse Le Lez
+
+## API Utilisée:
+L'API utilisée est PokéApi. Pour des informations détaillées sur son utilisation, veuillez consulter la [documentation](https://pokeapi.co/docs/v2).
+
+## Modules Utilisés:
+- react-native-sound: Ce module a été utilisé pour jouer le son du cri d'un Pokémon durant le quiz.
+- pokenode-ts: Ce module nous sert de client pour les différents appels API que nous utilisons dans notre application pour obtenir des informations sur les Pokémon.
+
+## Fonctionnalités de l'Application:
+Notre application est composée des écrans suivants: Connexion, Inscription, Pokédex, Détail, Catch, Profil. La persistance de notre application est basée sur l'AsyncStorage. De plus, lorsque l'utilisateur se connecte ou s'inscrit, ses données (ID, pseudo, mot de passe,chemin ou lien photo) sont stockées dans le cache et dans notre store (sans le mot de passe), permettant une meilleure gestion de l'application.
+
+- L'écran Pokédex contient deux sections: la première section affiche la liste de tous les Pokémon, la seconde section affiche la liste des Pokémon capturés.
+- L'écran Détail est accessible en cliquant sur un Pokémon déjà capturé depuis la liste des Pokémon capturés. Cet écran affiche plus d'informations sur le Pokémon sélectionné (poids, taille, type, nom, cris et image).
+- L'écran Catch génère constamment aléatoirement différentes questions avec deux propositions de réponse (une bonne et une mauvaise réponse). Si l'utilisateur répond correctement, le Pokémon est capturé et donc inscrit dans le cache parmi la liste de ses Pokémon capturés. Si la question concerne le cri, l'utilisateur possède un bouton permettant d'écouter les cris au-dessus de chaque élément de réponse.
+- L'écran Profil permet de retrouver les informations de l'utilisateur telles que son nom, sa photo de profil (récupérée depuis le store) ainsi que le nombre de Pokémon capturés (récupéré depuis le cache).
+
 This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
 
 # Getting Started
